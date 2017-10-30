@@ -1,10 +1,13 @@
 import React from 'react';
+import {headerStyle} from './Styles';
 
-class Header extends React.Component {
+export class Header extends React.Component {
     render(){
         return(
             <div>
-
+				<header style={headerStyle}>
+					<h1>FindUs</h1>
+				</header>
             </div>
         )
     }

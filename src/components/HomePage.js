@@ -1,10 +1,13 @@
 import React from 'react';
+import {Header} from './Header';
+import {NavBar} from './NavBar';
 
 class HomePage extends React.Component {
     render(){
         return(
             <div>
-                <h1>testing 123</h1>
+               <Header />
+			   <NavBar />
             </div>
         )
     }
