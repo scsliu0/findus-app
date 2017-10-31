@@ -1,5 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import HomePage from './components/HomePage';
+import ProfilePage from './components/ProfilePage';
+import MatchedUsers from './components/MatchedUsers'
 
-render(<HomePage/>, document.querySelector('#main'));
+render(<MatchedUsers/>, document.querySelector('#main'));
