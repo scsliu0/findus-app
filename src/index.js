@@ -2,6 +2,6 @@ import React from 'react';
 import { render } from 'react-dom';
 import HomePage from './components/HomePage';
 import ProfilePage from './components/ProfilePage';
-import MatchedUsers from './components/MatchedUsers'
+import SearchPage from './components/SearchPage'
 
-render(<MatchedUsers/>, document.querySelector('#main'));
+render(<SearchPage/>, document.querySelector('#main'));
