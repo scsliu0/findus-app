@@ -1,6 +1,21 @@
 import React, { Component } from 'react';
 import Checkbox from './Checkbox';
+import {Tabs, Tab} from 'material-ui/Tabs';
+import AppBar from 'material-ui/AppBar';
+import Badge from 'material-ui/Badge';
+import Chip from 'material-ui/Chip';
 
+const styles = {
+    chip: {
+        marginLeft:7,
+        marginRight:7,
+
+    },
+    wrapper: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+};
 
 var users = [
     {
@@ -132,37 +147,59 @@ class SearchPage extends Component {
 
 
         return(
-            <div className={'container'}>
+            <div className={'SearchPage'}>
 
-                <div className={"page-header"}>
-                    <h1>Search</h1>
+                <div className="Bar">
+                    <AppBar
+                        title="FindUs"
+                        iconClassNameRight="muidocs-icon-navigation-expand-more"
+                    />
                 </div>
-                <div className={"col-sm-12"}>
-
-                    <form className={"list-group"} onChange={this.handleFormChange}>
-                        {this.createCheckboxes()}
-                    </form>
+                <div className="Tabular">
+                    <Tabs>
+                        <Tab
+                            label="Profile"
+                        />
+                        <Tab
+                            label="Search"
+                        />
+                        <Tab
+                            label={<Badge badgeContent={4} secondary={true} badgeStyle={{top: 10, right: 1}}>Requests</Badge>}
+                        />
+                    </Tabs>
                 </div>
-                <hr/>
-                <h4>
-                    Matched Users: <span className={"badge"}>{this.state.usersToDisplay.length}</span>
-                </h4>
+                <div className={"container"}>
+                    <div className={"page-header"}>
+                        <h1><b>Search</b></h1>
+                    </div>
+                    <div className={"col-sm-12"}>
+                        <h2><b>Interests</b></h2>
+                        <form className={"list-group"} onChange={this.handleFormChange}>
+                            {this.createCheckboxes()}
+                        </form>
+                    </div>
+                    <hr/>
+                    <h4>
+                        Matched Users: <span className={"badge"}>{this.state.usersToDisplay.length}</span>
+                    </h4>
 
-                <ul className={"list-group"}>
-                    { this.state.usersToDisplay.map((user, index) =>
-                        <li className={"list-group-item"} key={index}>
+                    <ul className={"list-group"}>
+                        { this.state.usersToDisplay.map((user, index) =>
+                            <li className={"list-group-item"} key={index}>
 
-                            <h3 className={"list-group-item-heading"}><b>{user.userName}</b></h3>
-                            <div className={"row"}>
-                                {this.state.usersToDisplay[index].userInterests.map((interest, index) =>
-                                    <div className={"col-sm-1"} key={index}>
-                                        <p>{interest}</p>
-                                    </div>
-                                )}
-                            </div>
-                        </li>
-                    )}
-                </ul>
+                                <h3 className={"list-group-item-heading"}><b>{user.userName}</b></h3>
+                                <div style={styles.wrapper} className={"row"}>
+                                    {this.state.usersToDisplay[index].userInterests.map((interest, index) =>
+                                        <div style={styles.wrapper} key={index}>
+
+                                            <Chip style={styles.chip}>{interest}</Chip>
+                                        </div>
+                                    )}
+                                </div>
+                            </li>
+                        )}
+                    </ul>
+                </div>
             </div>
         )
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-class SearchPage extends React.Component {
+class RequestPage extends React.Component {
     render(){
         return(
             <div>
@@ -10,4 +10,4 @@ class SearchPage extends React.Component {
     }
 }
 
-export default SearchPage;
+export default RequestPage;
