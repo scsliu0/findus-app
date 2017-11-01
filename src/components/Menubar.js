@@ -25,12 +25,7 @@ class Menubar extends React.Component {
                         >
                         <MenuItem>FindUs</MenuItem>
                         <Divider />
-                        <MenuItem onClick={this.handleClose}>Profile</MenuItem>
                         <MenuItem onClick={this.handleClose}>Log Out</MenuItem>
-                        <Divider />
-                        <MenuItem onClick={this.handleClose}>Search</MenuItem>
-                        <MenuItem onClick={this.handleClose}>Requests</MenuItem>
-                        <Divider />
                         <MenuItem onClick={this.handleClose}>About Us</MenuItem>
                 </Drawer>
             </div>
