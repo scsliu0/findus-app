@@ -1,48 +1,58 @@
 import React from 'react';
-import AppBar from 'material-ui/AppBar';
-import Divider from 'material-ui/Divider';
-import Drawer from 'material-ui/Drawer';
+import Menubar from './Menubar'
 import Paper from 'material-ui/Paper';
-import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
+import logo from '../img/findUs.png';
+import RaisedButton from 'material-ui/RaisedButton';
 
 const paperStyle={
-        height: 650,
-        width: 1200,
-        position: 'fixed',
-        top: '12%',
-        left: '12%',
-        align: 'center',
-        display: 'inline-block'
+    height: 650,
+    width: 1200,
+    position: 'fixed',
+    top: '12%',
+    left: '12%',
+    align: 'center',
+    display: 'inline-block'
+}
+
+const loginStyle={
+    position: 'absolute',
+    top: '52%',
+    left: '40%'
+}
+
+const butStyle={
+    margin: '5px',
+    position: 'relative',
+    left: '70px'
+}
+
+const logoDiv={
+    position:'absolute',
+    top: '10%',
+    left: '38%',
+    height: '50px',
+    width: '50px'
 }
 
 class HomePage extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {open: false};
-    }
-
     render(){
         return(
             <div className="HomePage">
-                <AppBar
-                    title="FindUs"
-                    onLeftIconButtonTouchTap={() => this.setState({open: !this.state.open})}
-                />
-                <Drawer
-                          docked={false}
-                          width={200}
-                          open={this.state.open}
-                          onRequestChange={(open) => this.setState({open})}
-                        >
-                        <MenuItem>FindUs</MenuItem>
-                        <Divider />
-                        <MenuItem onClick={this.handleClose}>Login</MenuItem>
-                        <MenuItem onClick={this.handleClose}>About Us</MenuItem>
-                </Drawer>
-                <Paper style={paperStyle} zDepth={3}/>
-                <TextField hintText="Username or email"/><br />
-                <TextField hintText="password"/>
+                <Menubar />
+                <Paper style={paperStyle} zDepth={3}>
+                    <div style={logoDiv} className="logo">
+                        <img src={logo}/>
+                    </div>
+                    <div style={loginStyle} className="loginInfo">
+                        <TextField hintText="Username or email"/><br />
+                        <TextField hintText="password"/><br /><br />
+                        <RaisedButton label="Login" primary={true} style={butStyle} /><br /><br />
+                        <RaisedButton label="Sign Up" secondary={true} style={butStyle} />
+                    </div>
+                </Paper>
+                <div className="loginInfo">
+                </div>
             </div>
         )
     }
