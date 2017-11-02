@@ -1,4 +1,14 @@
 import React, { Component, PropTypes } from 'react';
+import CheckboxMat from 'material-ui/Checkbox';
+
+const styles = {
+    block: {
+        maxWidth: 250,
+    },
+    checkbox: {
+        marginBottom: 16,
+    },
+};
 
 class Checkbox extends Component {
     state = {
@@ -22,18 +32,13 @@ class Checkbox extends Component {
         const { isChecked } = this.state;
 
         return (
-            <div className="checkbox">
-                <label>
-                    <input
-                        type="checkbox"
-                        value={label}
-                        checked={isChecked}
-                        onChange={this.toggleCheckboxChange}
-                    />
 
-                    {label}
-                </label>
-            </div>
+            <CheckboxMat
+                type={"checkbox"}
+                label={label}
+                checked={isChecked}
+                onCheck={this.toggleCheckboxChange}
+            />
         );
     }
 }

@@ -4,6 +4,15 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import AppBar from 'material-ui/AppBar';
 import Badge from 'material-ui/Badge';
 import Chip from 'material-ui/Chip';
+import {
+    Table,
+    TableBody,
+    TableHeader,
+    TableHeaderColumn,
+    TableRow,
+    TableRowColumn,
+} from 'material-ui/Table';
+import FlatButton from 'material-ui/FlatButton';
 
 const styles = {
     chip: {
@@ -44,8 +53,23 @@ var users = [
         userLocation: [0,0]
     },
     {
+        userName: "Dakota",
+        userInterests: ["Cooking", "Gaming", "Yelling", "Lacrosse", "Basketball"],
+        userLocation: [0,0]
+    },
+    {
+        userName: "Kirk",
+        userInterests: ["Cars", "Gaming", "Partying", "Runescape", "Netflix and Chill"],
+        userLocation: [0,0]
+    },
+    {
+        userName: "Kyle",
+        userInterests: ["Music", "Gaming", "Korea", "Korean Women", "Baseball"],
+        userLocation: [0,0]
+    },
+    {
         userName: "Peter",
-        userInterests: ["Hockey", "Gaming", "Cheating", "Runescape", "Baseball"],
+        userInterests: ["Hockey", "Marijuana", "Teenagers", "Cheating", "Baseball"],
         userLocation: [0,0]
     }
 ];
@@ -55,13 +79,13 @@ const interests = [
     'Dancing',
     'Exercise',
     'Gaming',
-    "Cricket",
-    "Dropping out",
-    "Soccer",
-    "Hiking",
-    "Baseball",
-    "Warhammer",
-    "Reading",
+    'Cricket',
+    'Dropping out',
+    'Soccer',
+    'Hiking',
+    'Baseball',
+    'Warhammer',
+    'Reading',
 ];
 
 
@@ -72,7 +96,6 @@ function checkIntersection(arr1, arr2){
 
 var usersToDisplay = [];
 
-
 class SearchPage extends Component {
     constructor(props) {
         super(props);
@@ -82,6 +105,7 @@ class SearchPage extends Component {
             usersToDisplay
         };
     }
+
 
     componentWillMount = () => {
         this.selectedCheckboxes = new Set();
@@ -97,13 +121,10 @@ class SearchPage extends Component {
     };
 
     handleFormChange = formSubmitEvent => {
-        //formSubmitEvent.preventDefault();
+
         for(const checkbox of this.selectedCheckboxes){
             console.log(checkbox, "is selected.");
         }
-        // console.log(this.state.users[0].userInterests.filter(function (n) {
-        //     return this.selectedCheckboxes.indexOf(n) > -1;
-        // }));
         console.log(this.selectedCheckboxes);
 
         //Turn checkbox set into an array
@@ -135,6 +156,7 @@ class SearchPage extends Component {
             label={label}
             handleCheckboxChange={this.toggleCheckbox}
             key={label}
+            style={styles.checkbox}
         />
     );
 
@@ -148,7 +170,6 @@ class SearchPage extends Component {
 
         return(
             <div className={'SearchPage'}>
-
                 <div className="Bar">
                     <AppBar
                         title="FindUs"
@@ -182,22 +203,34 @@ class SearchPage extends Component {
                     <h4>
                         Matched Users: <span className={"badge"}>{this.state.usersToDisplay.length}</span>
                     </h4>
-
-                    <ul className={"list-group"}>
+                    <Table>
+                        <TableHeader adjustforCheckbox={false} displaySelectAll={false}>
+                            <TableRow>
+                                <TableHeaderColumn>Name</TableHeaderColumn>
+                                <TableHeaderColumn>Interests</TableHeaderColumn>
+                                <TableHeaderColumn>Request</TableHeaderColumn>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody displayRowCheckbox={false}>
                         { this.state.usersToDisplay.map((user, index) =>
-                            <li className={"list-group-item"} key={index}>
-
-                                <h3 className={"list-group-item-heading"}><b>{user.userName}</b></h3>
-                                <div style={styles.wrapper} className={"row"}>
+                            <TableRow key={index}>
+                                <TableRowColumn>
+                                    <b>{user.userName}</b>
+                                </TableRowColumn>
+                                <TableRowColumn>
                                     {this.state.usersToDisplay[index].userInterests.map((interest, index) =>
-                                        <div style={styles.wrapper} key={index}>
-
-                                            <Chip style={styles.chip}>{interest}</Chip>
-                                        </div>
+                                        <p key={index}>{interest}</p>
                                     )}
-                                </div>
-                            </li>
+                                </TableRowColumn>
+                                <TableRowColumn><FlatButton label="contact" /></TableRowColumn>
+                            </TableRow>
                         )}
+
+
+                        </TableBody>
+                    </Table>
+                    <ul className={"list-group"}>
+
                     </ul>
                 </div>
             </div>
