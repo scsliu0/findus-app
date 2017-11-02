@@ -3,7 +3,8 @@ import { render } from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import App from './components/App'
 import HomePage from './components/HomePage';
-import ProfilePage from './components/ProfilePage';
+import SearchPage from './components/SearchPage';
+import RequestsPage from './components/RequestsPage';
 
 render(
   <MuiThemeProvider><App /></MuiThemeProvider>,

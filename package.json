@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "history": "4.2.0",
+    "material-design-icons": "^3.0.1",
     "material-ui": "^0.19.4",
     "re-base": "2.2.0",
     "react": "15.3.2",
