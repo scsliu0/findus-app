@@ -2,8 +2,11 @@ import React from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import Badge from 'material-ui/Badge';
 import Paper from 'material-ui/Paper';
+
 import Menubar from './Menubar';
 import ProfilePage from './ProfilePage';
+import SearchPage from './SearchPage';
+import RequestsPage from './RequestsPage';
 
 const paperStyle={
     height: 650,
@@ -26,12 +29,12 @@ class App extends React.Component {
                                 <Tab  label="Profile">
                                     <ProfilePage />
                                 </Tab>
-                                <Tab
-                                    label="Search"
-                                />
-                                <Tab
-                                    label={<Badge badgeContent={4} secondary={true} badgeStyle={{top: 10, right: 1}}>Requests</Badge>}
-                                />
+                                <Tab label="Search">
+                                    <SearchPage />
+                                </Tab>
+                                <Tab label="Requests">
+                                    <RequestsPage />
+                                </Tab>
                             </Tabs>
                         </div>
                     </Paper>
