@@ -1,7 +1,7 @@
 import React from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import Paper from 'material-ui/Paper';
-import HomePage from './HomePage';
+//import HomePage from './HomePage';
 import Menubar from './Menubar';
 import ProfilePage from './ProfilePage';
 import SearchPage from './SearchPage';
