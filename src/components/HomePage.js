@@ -24,7 +24,7 @@ const loginStyle={
 const butStyle={
     margin: '5px',
     position: 'relative',
-    left: '70px'
+    left: '15px'
 }
 
 const logoDiv={
@@ -35,7 +35,21 @@ const logoDiv={
     width: '50px'
 }
 
+
+
 class HomePage extends React.Component {
+
+    constructor(){
+        super();
+        this.goToApp = this.goToApp.bind(this);
+    }
+
+    goToApp(event){
+        event.preventDefault();
+        console.log('Going to User');
+        this.context.router.transitionTo('/user/123');
+    }
+
     render(){
         return(
             <div className="HomePage">
@@ -45,10 +59,7 @@ class HomePage extends React.Component {
                         <img alt="findus-logo" src={logo}/>
                     </div>
                     <div style={loginStyle} className="loginInfo">
-                        <TextField hintText="Username or email"/><br />
-                        <TextField hintText="password"/><br /><br />
-                        <RaisedButton label="Login" primary={true} style={butStyle} /><br /><br />
-                        <RaisedButton label="Sign Up" secondary={true} style={butStyle} />
+                        <RaisedButton onClick={this.goToApp} label="Login with Facebook" primary={true} style={butStyle} />
                     </div>
                 </Paper>
                 <div className="loginInfo">
@@ -56,6 +67,10 @@ class HomePage extends React.Component {
             </div>
         )
     }
+}
+
+HomePage.contextTypes = {
+    router: React.PropTypes.object
 }
 
 export default HomePage
