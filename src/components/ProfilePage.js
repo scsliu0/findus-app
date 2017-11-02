@@ -28,10 +28,10 @@ class ProfilePage extends React.Component {
     constructor(){
         super();
         this.state ={
-            nameValue: 'Enter Name',
-            contactValue: 'Enter Contact Number',
-            locationValue: 'Enter Location',
-            interestValue: 'Enter Interests'
+            nameValue: '',
+            contactValue: '',
+            locationValue: '',
+            interestValue: ''
         }
     }
 
