@@ -9,9 +9,8 @@ import RequestsPage from './RequestsPage';
 import base from '../base';
 
 const paperStyle={
-    height: 650,
-    width: 1200,
-    position: 'fixed',
+    height: 2000,
+    width: 1520,
     top: '12%',
     left: '12%',
     align: 'center',
