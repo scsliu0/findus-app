@@ -1,11 +1,8 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
-import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import Divider from 'material-ui/Divider';
-import Subheader from 'material-ui/Subheader';
-import Checkbox from 'material-ui/Checkbox';
+import RaisedButton from 'material-ui/RaisedButton';
 
 const avatarStyle={
     position: 'absolute',
@@ -14,15 +11,6 @@ const avatarStyle={
     top: '20%',
     margin: '40px'
 }
-
-const checkStyle = {
-  block: {
-    maxWidth: 250,
-  },
-  checkbox: {
-    marginBottom: 16,
-  },
-};
 
 const paperStyle={
     position: 'absolute',
@@ -34,24 +22,53 @@ const paperStyle={
     textAlign: 'center',
     display: 'inline-block',
 }
-const butStyle={
-    height: 30,
-    margin: '5px',
-    position: 'relative'
-}
 
 class ProfilePage extends React.Component {
 
-    state = {
-      checked: false,
+    constructor(){
+        super();
+        this.state ={
+            nameValue: 'Enter Name',
+            contactValue: 'Enter Contact Number',
+            locationValue: 'Enter Location',
+            interestValue: 'Enter Interests'
+        }
     }
 
-    updateCheck() {
-      this.setState((oldState) => {
-        return {
-          checked: !oldState.checked,
-        };
+    handleNameChange = (event) => {
+        this.setState({
+          nameValue: event.target.value
+        });
+      };
+
+    handleNumberChange = (event) => {
+      this.setState({
+        contactValue: event.target.value
       });
+    };
+
+    handleLocationChange = (event) => {
+        this.setState({
+          locationValue: event.target.value
+        });
+    };
+
+    handleInterestChange = (event) => {
+        this.setState({
+          interestValue: event.target.value
+        });
+    };
+
+    updateUser(event){
+        event.preventDefault();
+        const user={
+            name: this.state.nameValue,
+            contact: this.state.contactValue,
+            location: this.state.locationValue,
+            interest: this.state.interestValue
+        }
+        console.log(user);
+        this.props.getUser(user);
     }
 
     render(){
@@ -61,25 +78,17 @@ class ProfilePage extends React.Component {
                           size={200}
                           style={avatarStyle}
                 >
-                    A
+                    ?
                 </Avatar>
                 <div className="Info">
                     <Paper style={paperStyle}>
                         <div style={{margin: '30px'}} className="Info">
-                            <TextField hintText="Name"/> <RaisedButton label="Save" style={butStyle} primary={true} /><br />
-                            <TextField hintText="Contact No"/><RaisedButton label="Save" style={butStyle} primary={true} /><br />
-                            <TextField hintText="Location"/><RaisedButton label="Save" style={butStyle} primary={true} /><br />
+                            <TextField floatingLabelStyle={{left: '0%', marginBottom: '20px'}}floatingLabelFixed={true} floatingLabelText='Name' value={this.state.nameValue} onChange={this.handleNameChange}/> <br />
+                            <TextField floatingLabelStyle={{left: '0%', marginBottom: '20px'}}floatingLabelFixed={true} floatingLabelText='Contact Number' value={this.state.contactValue} onChange={this.handleNumberChange}/> <br />
+                            <TextField floatingLabelStyle={{left: '0%', marginBottom: '20px'}}floatingLabelFixed={true} floatingLabelText='Location' value={this.state.locationValue} onChange={this.handleLocationChange}/> <br />
+                            <TextField floatingLabelStyle={{left: '0%', marginBottom: '20px'}}floatingLabelFixed={true} floatingLabelText='Interests' multiLine={true} value={this.state.interestValue} onChange={this.handleInterestChange}/> <br />
+                            <RaisedButton onClick={(e) => this.updateUser(e)} style={{margin: '20px'}}label="Save" primary={true} />
                         </div>
-                        <Divider />
-                        <Subheader style={{textAlign: 'left', marginLeft: '60px', marginTop: '10px'}}>Interests</Subheader>
-                            <Checkbox
-                                      label="Simple"
-                                      style={checkStyle}
-                            />
-                            <Checkbox
-                                      label="Simple"
-                                      style={checkStyle}
-                            />
                     </Paper>
                 </div>
             </div>

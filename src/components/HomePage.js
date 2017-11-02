@@ -1,7 +1,6 @@
 import React from 'react';
 import Menubar from './Menubar'
 import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
 import logo from '../img/findUs.png';
 import RaisedButton from 'material-ui/RaisedButton';
 
@@ -20,6 +19,12 @@ const loginStyle={
     top: '52%',
     left: '40%'
 }
+
+/*const signUpStyle={
+    position: 'absolute',
+    top: '61%',
+    left: '42.5%'
+}*/
 
 const butStyle={
     margin: '5px',
@@ -42,12 +47,20 @@ class HomePage extends React.Component {
     constructor(){
         super();
         this.goToApp = this.goToApp.bind(this);
+        this.goToSignUp = this.goToSignUp.bind(this);
+    }
+
+    goToSignUp(event){
+        event.preventDefault();
+        console.log('Going to User');
+        this.context.router.transitionTo('/signup');
     }
 
     goToApp(event){
         event.preventDefault();
-        console.log('Going to User');
-        this.context.router.transitionTo('/user/123');
+        console.log('Going to Sign Up');
+        const timestamp = Date.now();
+        this.context.router.transitionTo('/user/'+timestamp);
     }
 
     render(){
@@ -61,6 +74,9 @@ class HomePage extends React.Component {
                     <div style={loginStyle} className="loginInfo">
                         <RaisedButton onClick={this.goToApp} label="Login with Facebook" primary={true} style={butStyle} />
                     </div>
+                    {/*<div style={signUpStyle} className="signUpInfo">
+                        <RaisedButton onClick={this.goToSignUp} label="Create User" secondary={true} style={butStyle} />
+                    </div>*/}
                 </Paper>
                 <div className="loginInfo">
                 </div>

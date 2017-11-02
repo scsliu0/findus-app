@@ -1,12 +1,12 @@
 import React from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
-import Badge from 'material-ui/Badge';
 import Paper from 'material-ui/Paper';
 
 import Menubar from './Menubar';
 import ProfilePage from './ProfilePage';
 import SearchPage from './SearchPage';
 import RequestsPage from './RequestsPage';
+import base from '../base';
 
 const paperStyle={
     height: 650,
@@ -19,6 +19,36 @@ const paperStyle={
 }
 
 class App extends React.Component {
+
+    constructor(){
+        super();
+        this.getUser = this.getUser.bind(this);
+        //initialState
+        this.state={
+            users: {}
+        };
+    }
+
+    componentWillmount(){
+        const address= this.props.params.userId+'/users';
+        console.log({address});
+        this.userRef = base.syncState({address}, {
+            context: this,
+            state: 'users'
+        });
+    }
+
+    componentWillUnMount(){
+        base.removeBinding(this.ref);
+    }
+
+    getUser(user){
+        const users = {...this.state.users};
+        users['users']=user;
+        this.setState({ users });
+    }
+
+
     render(){
         return(
             <div className="App">
@@ -27,7 +57,7 @@ class App extends React.Component {
                         <div className="tabular">
                             <Tabs>
                                 <Tab  label="Profile">
-                                    <ProfilePage />
+                                    <ProfilePage getUser={this.getUser} />
                                 </Tab>
                                 <Tab label="Search">
                                     <SearchPage />
