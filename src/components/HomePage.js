@@ -1,7 +1,6 @@
 import React from 'react';
 import Menubar from './Menubar'
 import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
 import logo from '../img/findUs.png';
 import RaisedButton from 'material-ui/RaisedButton';
 
@@ -21,10 +20,16 @@ const loginStyle={
     left: '40%'
 }
 
+/*const signUpStyle={
+    position: 'absolute',
+    top: '61%',
+    left: '42.5%'
+}*/
+
 const butStyle={
     margin: '5px',
     position: 'relative',
-    left: '70px'
+    left: '15px'
 }
 
 const logoDiv={
@@ -35,27 +40,53 @@ const logoDiv={
     width: '50px'
 }
 
+
+
 class HomePage extends React.Component {
+
+    constructor(){
+        super();
+        this.goToApp = this.goToApp.bind(this);
+        this.goToSignUp = this.goToSignUp.bind(this);
+    }
+
+    goToSignUp(event){
+        event.preventDefault();
+        console.log('Going to User');
+        this.context.router.transitionTo('/signup');
+    }
+
+    goToApp(event){
+        event.preventDefault();
+        console.log('Going to Sign Up');
+        const timestamp = Date.now();
+        this.context.router.transitionTo('/user/'+timestamp);
+    }
+
     render(){
         return(
             <div className="HomePage">
                 <Menubar />
                 <Paper style={paperStyle} zDepth={3}>
                     <div style={logoDiv} className="logo">
-                        <img src={logo}/>
+                        <img alt="findus-logo" src={logo}/>
                     </div>
                     <div style={loginStyle} className="loginInfo">
-                        <TextField hintText="Username or email"/><br />
-                        <TextField hintText="password"/><br /><br />
-                        <RaisedButton label="Login" primary={true} style={butStyle} /><br /><br />
-                        <RaisedButton label="Sign Up" secondary={true} style={butStyle} />
+                        <RaisedButton onClick={this.goToApp} label="Login with Facebook" primary={true} style={butStyle} />
                     </div>
+                    {/*<div style={signUpStyle} className="signUpInfo">
+                        <RaisedButton onClick={this.goToSignUp} label="Create User" secondary={true} style={butStyle} />
+                    </div>*/}
                 </Paper>
                 <div className="loginInfo">
                 </div>
             </div>
         )
     }
+}
+
+HomePage.contextTypes = {
+    router: React.PropTypes.object
 }
 
 export default HomePage

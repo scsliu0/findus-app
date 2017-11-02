@@ -1,6 +1,5 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
-import FontIcon from 'material-ui/FontIcon';
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
 import {
@@ -12,7 +11,6 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import FlatButton from 'material-ui/FlatButton';
-import IconButton from 'material-ui/IconButton';
 
 const paperStyle={
     height: 500,
