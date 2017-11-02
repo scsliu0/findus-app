@@ -3,6 +3,7 @@ import Menubar from './Menubar'
 import Paper from 'material-ui/Paper';
 import logo from '../img/findUs.png';
 import RaisedButton from 'material-ui/RaisedButton';
+import base from '../base';
 
 const paperStyle={
     height: 650,
@@ -40,14 +41,14 @@ const logoDiv={
     width: '50px'
 }
 
-
-
 class HomePage extends React.Component {
 
     constructor(){
         super();
         this.goToApp = this.goToApp.bind(this);
         this.goToSignUp = this.goToSignUp.bind(this);
+        //this.authenticate = this.authenticate.bind(this);
+        //this.authHandler = this.authHandler.bind(this);
     }
 
     goToSignUp(event){
@@ -56,9 +57,17 @@ class HomePage extends React.Component {
         this.context.router.transitionTo('/signup');
     }
 
+    /*authenticate(provider){
+        console.log('Trying to login with '+provider);
+        base.auth().signInWithPopup(provider).then(() => {
+            console.log('authData');
+        });
+    }*/
+
     goToApp(event){
         event.preventDefault();
-        console.log('Going to Sign Up');
+        //console.log('Going to Sign Up');
+        //this.authenticate('facebook');
         const timestamp = Date.now();
         this.context.router.transitionTo('/user/'+timestamp);
     }

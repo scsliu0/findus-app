@@ -1,7 +1,7 @@
 import React from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import Paper from 'material-ui/Paper';
-
+//import HomePage from './HomePage';
 import Menubar from './Menubar';
 import ProfilePage from './ProfilePage';
 import SearchPage from './SearchPage';
@@ -23,16 +23,19 @@ class App extends React.Component {
     constructor(){
         super();
         this.getUser = this.getUser.bind(this);
+        this.renderLogin = this.renderLogin.bind(this);
         //initialState
         this.state={
-            users: {}
+            users: {},
+            uid: null,
+            owner: null
         };
     }
 
-    componentWillmount(){
-        const address= this.props.params.userId+'/users';
-        console.log({address});
-        this.userRef = base.syncState({address}, {
+    componentWillMount() {
+        var address=this.props.params.userId+'/users';
+        this.userRef = base.syncState(address
+        , {
             context: this,
             state: 'users'
         });
@@ -48,8 +51,24 @@ class App extends React.Component {
         this.setState({ users });
     }
 
+    renderLogin(){
+        return(
+            <HomePage />
+        )
+    }
 
     render(){
+        //check
+        /*if(!this.state.uid){
+            return <div>{this.renderLogin()}</div>
+        }
+
+        if(this.state.uid != this.state.owner){
+            console.log('not your account');
+            return(
+                <div>{this.renderLogin()}</div>
+            )
+        }*/
         return(
             <div className="App">
                 <Menubar />
