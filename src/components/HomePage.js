@@ -42,7 +42,7 @@ class HomePage extends React.Component {
                 <Menubar />
                 <Paper style={paperStyle} zDepth={3}>
                     <div style={logoDiv} className="logo">
-                        <img src={logo}/>
+                        <img alt="findus-logo" src={logo}/>
                     </div>
                     <div style={loginStyle} className="loginInfo">
                         <TextField hintText="Username or email"/><br />
