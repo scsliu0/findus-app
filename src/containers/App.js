@@ -4,6 +4,7 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import {grey500, white} from 'material-ui/styles/colors';
+import logo from '../img/findUs.png';
 import TextField from 'material-ui/TextField';
 
 class App extends React.Component {
@@ -65,6 +66,9 @@ class App extends React.Component {
           btnSpan: {
             marginLeft: 5
           },
+          logoDiv: {
+              paddingLeft: 50
+          }
         };
 
         return(
@@ -72,6 +76,12 @@ class App extends React.Component {
                 <div style={styles.loginContainer}>
                     <Paper style={styles.paper}>
                         <form>
+                            <div className="logo">
+                                <img style={
+                                    styles.logoDiv
+                                }
+                                alt="findus-logo" src={logo}/>
+                            </div>
                             <TextField
                             hintText="E-mail"
                             floatingLabelText="E-mail"
