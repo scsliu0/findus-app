@@ -1,5 +1,4 @@
 import React from 'react';
-import {grey400} from 'material-ui/styles/colors';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Header from '../components/Header';
@@ -19,10 +18,6 @@ class ProfilePage extends React.Component {
             },
             form:{
                 margin: '0px 40px 40px 40px'
-            },
-            toggleLabel: {
-              color: grey400,
-              fontWeight: 100
             },
             buttons: {
               marginTop: 30,
