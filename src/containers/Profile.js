@@ -2,10 +2,9 @@ import React from 'react';
 import {grey400} from 'material-ui/styles/colors';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import Header from '../components/Header';
 import Subheader from 'material-ui/Subheader';
 
-class ProfilePage extends React.Component {
+class Profile extends React.Component {
 
     render(){
         const styles = {
@@ -38,8 +37,8 @@ class ProfilePage extends React.Component {
         };
 
         return(
-            <div className="ProfilePage">
-                <Header styles={styles.header}/>
+            <div className="Profile">
+
 
                 <div style={styles.container}>
                     <Subheader style={styles.title}>Profile</Subheader>
@@ -87,4 +86,4 @@ class ProfilePage extends React.Component {
     }
 }
 
-export default ProfilePage;
+export default Profile;

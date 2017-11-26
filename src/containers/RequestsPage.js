@@ -18,8 +18,6 @@ class RequestsPage extends React.Component {
         }
         return(
             <div className="requestPaper">
-                <Header styles={styles.header}/>
-
                 <div style={styles.container}>
                     <Subheader style={styles.title}>Requests</Subheader>
                 </div>

@@ -15,11 +15,10 @@ class ConnectionsPage extends React.Component {
                 fontWeight: 'bold',
                 fontSize: '30px'
             }
-        }
+        };
+
         return(
             <div className="requestPaper">
-                <Header styles={styles.header}/>
-
                 <div style={styles.container}>
                     <Subheader style={styles.title}>Connections</Subheader>
                 </div>

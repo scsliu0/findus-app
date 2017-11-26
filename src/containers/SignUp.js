@@ -36,7 +36,6 @@ class SignUp extends React.Component {
 
         return(
             <div className="SignUp">
-                <Header styles={styles.header}/>
 
                 <div style={styles.container}>
                   <Subheader style={styles.title}>Sign Up</Subheader>

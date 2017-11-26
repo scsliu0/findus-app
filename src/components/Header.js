@@ -8,6 +8,7 @@ import Drawer from 'material-ui/Drawer';
 import {spacing, typography} from 'material-ui/styles';
 import Avatar from 'material-ui/Avatar';
 import avatar from '../img/stock.svg';
+import {RaisedButton} from "material-ui";
 
 class Header extends React.Component{
 
@@ -15,6 +16,30 @@ class Header extends React.Component{
       super(props);
       this.state = {open: false};
     }
+
+    goToLogin = () => {
+        this.context.router.transitionTo('/login');
+    };
+
+    goToLogout = () => {
+        this.context.router.transitionTo('/logout');
+    };
+
+    goToSearch = () => {
+        this.context.router.transitionTo('/user/' + this.props.userId + '/search');
+    };
+
+    goToRequests = () => {
+        this.context.router.transitionTo('/user/' + this.props.userId +  '/requests');
+    };
+
+    goToConnections = () => {
+        this.context.router.transitionTo('/user/' + this.props.userId + '/connections');
+    };
+
+    goToProfile = () => {
+        this.context.router.transitionTo('/user/' + this.props.userId + '/profile');
+    };
 
     render(){
 
@@ -77,43 +102,90 @@ class Header extends React.Component{
 
         return(
             <div className="Header">
-                <AppBar
-                    style={style.appBar}
-                    title="FindUs"
-                    iconElementLeft={
-                        <IconButton style={style.menuButton} onClick={() => this.setState({open: !this.state.open})}>
-                          <Menu color={white} />
-                        </IconButton>
-                    }
-                />
+                {!this.props.authenticated
+                    ?
+                    <div>
+                        <AppBar
+                            style={style.appBar}
+                            title="FindUs"
+                            iconElementLeft={
+                                <IconButton style={style.menuButton} onClick={() => this.setState({open: !this.state.open})}>
+                                  <Menu color={white} />
+                                </IconButton>
+                            }
+                            iconElementRight={<RaisedButton onClick={this.goToLogin} label={"Login/Signup"}/>}
+                        />
 
-                <Drawer
-                        docked={false}
-                        width={200}
-                        open={this.state.open}
-                        onRequestChange={(open) => this.setState({open})}
+                        <Drawer
+                                docked={false}
+                                width={200}
+                                open={this.state.open}
+                                onRequestChange={(open) => this.setState({open})}
+                                >
+                                <div style={drawerstyles.logo}>
+                                  FindUs
+                                </div>
+                                <div style={drawerstyles.avatar.div}>
+                                  <Avatar src={avatar}
+                                          size={50}
+                                          style={drawerstyles.avatar.icon}/>
+                                  <span style={drawerstyles.avatar.span}>Username</span>
+                                </div>
+                                <div>
+                                    <MenuItem style={drawerstyles.logoutItem} onClick={this.goToLogin}>Log in/Sign Up</MenuItem>
+                                    <MenuItem style={drawerstyles.menuItem} onClick={this.goToProfile}>Profile</MenuItem>
+                                    <MenuItem style={drawerstyles.menuItem} onClick={this.goToSearch}>Search</MenuItem>
+                                    <MenuItem style={drawerstyles.menuItem} onClick={this.goToRequests}>Requests</MenuItem>
+                                    <MenuItem style={drawerstyles.menuItem} onClick={this.goToConnections}>Connections</MenuItem>
+                                </div>
+                        </Drawer>
+                    </div>
+                :
+                    <div>
+                        <AppBar
+                            style={style.appBar}
+                            title="FindUs"
+                            iconElementLeft={
+                                <IconButton style={style.menuButton} onClick={() => this.setState({open: !this.state.open})}>
+                                    <Menu color={white} />
+                                </IconButton>
+                            }
+
+                        />
+
+                        <Drawer
+                            docked={false}
+                            width={200}
+                            open={this.state.open}
+                            onRequestChange={(open) => this.setState({open})}
                         >
-                        <div style={drawerstyles.logo}>
-                          FindUs
-                        </div>
-                        <div style={drawerstyles.avatar.div}>
-                          <Avatar src={avatar}
-                                  size={50}
-                                  style={drawerstyles.avatar.icon}/>
-                          <span style={drawerstyles.avatar.span}>Username</span>
-                        </div>
-                        <div>
-                            <MenuItem style={drawerstyles.logoutItem} onClick={this.handleClose}>Sign Out</MenuItem>
-                            <MenuItem style={drawerstyles.menuItem} onClick={this.handleClose}>Profile</MenuItem>
-                            <MenuItem style={drawerstyles.menuItem} onClick={this.handleClose}>Search</MenuItem>
-                            <MenuItem style={drawerstyles.menuItem} onClick={this.handleClose}>Requests</MenuItem>
-                            <MenuItem style={drawerstyles.menuItem} onClick={this.handleClose}>Connections</MenuItem>
-                        </div>
-                </Drawer>
+                            <div style={drawerstyles.logo}>
+                                FindUs
+                            </div>
+                            <div style={drawerstyles.avatar.div}>
+                                <Avatar src={avatar}
+                                        size={50}
+                                        style={drawerstyles.avatar.icon}/>
+                                <span style={drawerstyles.avatar.span}>Username</span>
+                            </div>
+                            <div>
+                                <MenuItem style={drawerstyles.logoutItem} onClick={this.goToLogout}>Log Out</MenuItem>
+                                <MenuItem style={drawerstyles.menuItem} onClick={this.goToProfile}>Profile</MenuItem>
+                                <MenuItem style={drawerstyles.menuItem} onClick={this.goToSearch}>Search</MenuItem>
+                                <MenuItem style={drawerstyles.menuItem} onClick={this.goToRequests}>Requests</MenuItem>
+                                <MenuItem style={drawerstyles.menuItem} onClick={this.goToConnections}>Connections</MenuItem>
+                            </div>
+                        </Drawer>
+                    </div>
 
+                    }
             </div>
         )
     }
 }
 
 export default Header;
+
+Header.contextTypes = {
+    router: React.PropTypes.object
+};

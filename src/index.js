@@ -9,9 +9,12 @@ import NotFound from './containers/NotFound';
 import SignUp from './containers/SignUp';
 import App from './containers/App';
 import ConnectionsPage from './containers/ConnectionsPage';
-import ProfilePage from './containers/ProfilePage';
+import Profile from './containers/Profile';
 import RequestsPage from './containers/RequestsPage';
 import SearchPage from './containers/SearchPage';
+import Login from './containers/Login';
+import Logout from './containers/Logout'
+
 import Header from './components/Header';
 
 const Root = () => {
@@ -20,11 +23,13 @@ const Root = () => {
             <div>
                 <Match exactly pattern="/" component={App}/>
                 <Match exactly pattern="/signup" component={SignUp}/>
-                <Match exactly pattern="/connections" component={ConnectionsPage}/>
-                <Match exactly pattern="/profile" component={ProfilePage}/>
-                <Match exactly pattern="/requests" component={RequestsPage}/>
-                <Match exactly pattern="/search" component={SearchPage}/>
-                <Match exactly pattern="/test" component={Header}/>
+                <Match exactly pattern="/user/:userId/connections" component={App}/>
+                <Match exactly pattern="/user/:userId/profile" component={App}/>
+                <Match exactly pattern="/user/:userId/requests" component={App}/>
+                <Match exactly pattern="/user/:userId/search" component={App}/>
+                <Match exactly pattern="/logout" component={Logout}/>
+                <Match exactly pattern="/login" component={Login}/>
+
                 <Miss component={NotFound}/>
             </div>
         </BrowserRouter>
