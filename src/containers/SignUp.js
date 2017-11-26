@@ -1,15 +1,20 @@
 import React from 'react';
 import {grey400} from 'material-ui/styles/colors';
-import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton';
-import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
-import SelectField from 'material-ui/SelectField';
-import PageBase from '../components/PageBase';
+import Header from '../components/Header';
 
 class SignUp extends React.Component {
     render(){
         const styles = {
+            container: {
+              margin: '80px 20px 20px 15px'
+            },
+
+            form:{
+                margin: '40px'
+            },
+
             toggleDiv: {
               maxWidth: 300,
               marginTop: 40,
@@ -29,45 +34,50 @@ class SignUp extends React.Component {
         };
 
         return(
-            <PageBase title="Sign Up">
-                <div className="SignUp">
-                    <form>
-                        <TextField
-                        hintText="Name"
-                        floatingLabelText="Name"
-                        fullWidth={true}
-                        />
+            <div className="SignUp">
+                <Header styles={styles.header}/>
 
-                        <TextField
-                        hintText="E-Mail"
-                        floatingLabelText="E-Mail"
-                        fullWidth={true}
-                        />
-
-                        <TextField
-                          hintText="Password"
-                          floatingLabelText="Password"
-                          fullWidth={true}
-                          type="password"
-                        />
-
-                        <TextField
-                        hintText="Interests"
-                        floatingLabelText="Interests(seperated by a comma)"
-                        fullWidth={true}
-                        />
-
-                        <div style={styles.buttons}>
-                            <RaisedButton label="Cancel"/>
-
-                            <RaisedButton label="Save"
-                                        style={styles.saveButton}
-                                        type="submit"
-                                        primary={true}/>
-                        </div>
-                    </form>
+                <div style={styles.container}>
+                  {this.props.children}
                 </div>
-            </PageBase>
+                    <div className="SignUp">
+                        <form style={styles.form}>
+                            <TextField
+                            hintText="Name"
+                            floatingLabelText="Name"
+                            fullWidth={true}
+                            />
+
+                            <TextField
+                            hintText="E-Mail"
+                            floatingLabelText="E-Mail"
+                            fullWidth={true}
+                            />
+
+                            <TextField
+                              hintText="Password"
+                              floatingLabelText="Password"
+                              fullWidth={true}
+                              type="password"
+                            />
+
+                            <TextField
+                            hintText="Interests"
+                            floatingLabelText="Interests(seperated by a comma)"
+                            fullWidth={true}
+                            />
+
+                            <div style={styles.buttons}>
+                                <RaisedButton label="Cancel"/>
+
+                                <RaisedButton label="Save"
+                                            style={styles.saveButton}
+                                            type="submit"
+                                            primary={true}/>
+                            </div>
+                        </form>
+                    </div>
+            </div>
         )
     }
 }
