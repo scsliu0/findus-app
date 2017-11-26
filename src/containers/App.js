@@ -15,14 +15,14 @@ class App extends React.Component {
             maxWidth: 400,
             height: 'auto',
             position: 'absolute',
-            top: '20%',
+            top: '5%',
             left: 0,
             right: 0,
             margin: 'auto'
           },
           paper: {
             padding: 20,
-            overflow: 'auto'
+            overflow: 'hidden'
           },
           buttonsDiv: {
             textAlign: 'center',
@@ -67,7 +67,9 @@ class App extends React.Component {
             marginLeft: 5
           },
           logoDiv: {
-              paddingLeft: 50
+              align: 'center',
+              paddingLeft: '13%'
+
           }
         };
 
@@ -111,6 +113,10 @@ class App extends React.Component {
                         <div style={{...styles.btn, ...styles.btnFacebook}}>
                           <i className="fa fa-facebook fa-lg"/>
                           <span style={styles.btnSpan}>Log in with Facebook</span>
+                        </div>
+                        <div style={{...styles.btn, ...styles.btnGoogle}}>
+                          <i className="fa fa-google-plus fa-lg"/>
+                          <span style={styles.btnSpan}>Log in with Google</span>
                         </div>
                       </div>
                     </div>

@@ -3,6 +3,7 @@ import {grey400} from 'material-ui/styles/colors';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Header from '../components/Header';
+import Subheader from 'material-ui/Subheader';
 
 class ProfilePage extends React.Component {
 
@@ -17,7 +18,7 @@ class ProfilePage extends React.Component {
               margin: '80px 20px 20px 15px'
             },
             form:{
-                margin: '40px'
+                margin: '0px 40px 40px 40px'
             },
             toggleLabel: {
               color: grey400,
@@ -29,7 +30,11 @@ class ProfilePage extends React.Component {
             },
             saveButton: {
               marginLeft: 5
-            }
+          },
+          title: {
+              fontWeight: 'bold',
+              fontSize: '30px'
+          }
         };
 
         return(
@@ -37,7 +42,7 @@ class ProfilePage extends React.Component {
                 <Header styles={styles.header}/>
 
                 <div style={styles.container}>
-                  {this.props.children}
+                    <Subheader style={styles.title}>Profile</Subheader>
                 </div>
                     <div className="Profile">
                         <form style={styles.form}>

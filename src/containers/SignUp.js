@@ -3,6 +3,7 @@ import {grey400} from 'material-ui/styles/colors';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Header from '../components/Header';
+import Subheader from 'material-ui/Subheader';
 
 class SignUp extends React.Component {
     render(){
@@ -38,7 +39,7 @@ class SignUp extends React.Component {
                 <Header styles={styles.header}/>
 
                 <div style={styles.container}>
-                  {this.props.children}
+                  <Subheader style={styles.title}>Sign Up</Subheader>
                 </div>
                     <div className="SignUp">
                         <form style={styles.form}>
