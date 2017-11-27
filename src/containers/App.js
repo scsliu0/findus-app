@@ -95,10 +95,28 @@ class App extends React.Component {
             uid: null,
             urlUid: null,
             owner: null,
+            userlist: {},
             interests: {},
             authenticated: false,
             loading: true
         };
+    }
+
+    componentDidMount() {
+        /*base.fetch('users/', {
+            context: this,
+            then(data) {
+                if (data === null) {
+                    console.log("null data")
+                } else {
+                
+                    this.setState({
+                        userlist: data
+                    })
+                }
+            },
+        })*/
+        
     }
 
     componentWillMount() {
@@ -107,7 +125,25 @@ class App extends React.Component {
                 context: this,
                 state: 'interests'
             });
-
+        
+            base.fetch('users/', {
+                context: this,
+                then(data) {
+                    if (data === null) {
+                        console.log("null data")
+                    } else {
+                    
+                        this.setState({
+                            userlist: data
+                        })
+                    }
+                },
+            })
+        /*this.ref = base.syncState('/users/',{
+                context: this,
+                state: 'userlist'
+        });*/ 
+        
         this.removeAuthListener = base.auth().onAuthStateChanged((user) => {
 
             if(user) {
@@ -197,7 +233,7 @@ class App extends React.Component {
             return(
                 <div>
                     <Header styles={styles.header} authenticated={this.state.authenticated} userId={this.state.uid}/>
-                    <Search uid={this.state.uid} interests={this.state.interests}/>
+                    <Search uid={this.state.uid} userlist={this.state.userlist} interests={this.state.interests}/>
                 </div>
             )
         }
