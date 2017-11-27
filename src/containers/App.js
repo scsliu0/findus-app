@@ -17,6 +17,7 @@ import Header from "../components/Header";
 import Connections from "../containers/ConnectionsPage"
 import Search from "../containers/SearchPage"
 import Requests from "../containers/RequestsPage"
+import Login from "./Login";
 
 const styles = {
     loginContainer: {
@@ -165,11 +166,20 @@ class App extends React.Component {
     };
 
     render(){
+        if(this.state.authenticated === false) {
+            return(
+                <div>
+                    <Login/>
+                </div>
+            )
+        }
         if(this.state.loading === true) {
             return(
-                <div style={{textAlign: "center", position: "absolute", top:"25%", left:"50%"}}>
-                    <h3>Loading</h3>
-                    <CircularProgress size={100} thickness={5} color={"#11C1F7"}/>
+                <div>
+                    <div style={{textAlign: "center", position: "absolute", top:"25%", left:"50%"}}>
+                        <h3>Loading</h3>
+                        <CircularProgress size={100} thickness={5} color={"#11C1F7"}/>
+                    </div>
                 </div>
             )
         }
@@ -178,7 +188,7 @@ class App extends React.Component {
             return(
                 <div>
                     <Header styles={styles.header} authenticated={this.state.authenticated} userId={this.state.uid}/>
-                    <Profile currentUserId={this.state.uid} profileId={this.state.urlUid} interests={this.state.interests} loadSamples={this.loadSamples}/>
+                    <Profile uid={this.state.uid} profileId={this.state.urlUid} interests={this.state.interests} loadSamples={this.loadSamples}/>
                 </div>
             )
         }
@@ -220,7 +230,7 @@ class App extends React.Component {
                     <div className="tabular">
                         <Tabs>
                             <Tab onActive={this.handleActive} style={{background:"#11C1F7"}} label="Profile">
-                                    <Profile currentUserId={this.state.uid} profileId={this.state.urlUid} interests={this.state.interests} loadSamples={this.loadSamples}/>
+                                <Profile currentUserId={this.state.uid} profileId={this.state.urlUid} interests={this.state.interests} loadSamples={this.loadSamples}/>
                             </Tab>
                             <Tab style={{background:"#11C1F7"}} label="Search">
                                 <SearchPage />

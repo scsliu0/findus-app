@@ -87,10 +87,34 @@ class Login extends React.Component{
                 if(error){
                     console.log(error)
                 } else {
-                    console.log(result.user.uid + " signed in with Facebook");
-                    const userRef = base.database().ref(result.user.uid);
-                    console.log(userRef);
-                    this.context.router.transitionTo('/user/'+result.user.uid+'/profile');
+
+                    base.fetch('users/'+ result.user.uid, {
+                        context: this,
+                        then(data) {
+                            if (data === null) {
+                                base.post('users/'+result.user.uid, {
+                                    data: {
+                                        name: result.user.displayName,
+                                        contactNum: "",
+                                        location: "",
+                                        email: result.user.email,
+                                        provider: "facebook.com",
+                                        interests: {}
+                                    },
+                                    then(err){
+                                        if(!err){
+                                            console.log("New user saved to database!");
+                                        }
+                                    }
+                                });
+                            }
+
+                            console.log(result.user.uid + " signed in with Facebook");
+
+
+                            this.context.router.transitionTo('/user/' + result.user.uid + '/profile');
+                        }
+                    });
                 }
             })
     };
@@ -98,11 +122,35 @@ class Login extends React.Component{
     authWithGoogle = () => {
         base.auth().signInWithPopup(googleProvider)
             .then((result, error) => {
-                if(error){
+                if (error) {
                     console.log(error)
                 } else {
-                    console.log(result.user.uid + " signed in with Google");
-                    this.context.router.transitionTo('/user/'+result.user.uid+'/profile');
+
+                    base.fetch('users/' + result.user.uid, {
+                        context: this,
+                        then(data) {
+                            if (data === null) {
+                                base.post('users/' + result.user.uid, {
+                                    data: {
+                                        name: result.user.displayName,
+                                        contactNum: "",
+                                        location: "",
+                                        email: result.user.email,
+                                        provider: "google.com",
+                                        interests: {}
+                                    },
+                                    then(err) {
+                                        if (!err) {
+                                            console.log("New user saved to database!");
+                                        }
+                                    }
+                                });
+                            }
+                            console.log(result.user.uid + " signed in with Google");
+                            this.context.router.transitionTo('/user/' + result.user.uid + '/profile');
+                        }
+                    });
+
                 }
             })
     };
@@ -121,8 +169,32 @@ class Login extends React.Component{
                     return base.auth().createUserWithEmailAndPassword(data.email,data.password)
                         .then((result,error) =>{
                         console.log(result);
-                            this.context.router.transitionTo('/user/'+result.uid+'/profile');
+                                        base.fetch('users/' + result.uid, {
+                                            context: this,
+                                            then(data) {
+                                                if (data === null) {
+                                                    base.post('users/' + result.uid, {
+                                                        data: {
+                                                            name: "",
+                                                            contactNum: "",
+                                                            location: "",
+                                                            email: result.email,
+                                                            provider: "findus.com",
+                                                            interests: {}
+                                                        },
+                                                        then(err) {
+                                                            if (!err) {
+                                                                console.log("New user saved to database!");
+                                                            }
+                                                        }
+                                                    });
+                                                }
+                                                this.context.router.transitionTo('/user/' + result.uid + '/profile');
+                                            }
+                                        });
+
                         })
+
                 } else if (providers.indexOf("password") === -1) {
                     //they used google or facebook
                     this.loginForm.reset();
@@ -135,6 +207,7 @@ class Login extends React.Component{
                     //they have created an account with email/password. Log them in here
                     return base.auth().signInWithEmailAndPassword(data.email, data.password)
                         .then((result,error) => {
+                        console.log("here?");
                             this.context.router.transitionTo('/user/'+result.uid+'/profile');
                         })
                 }
