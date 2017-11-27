@@ -44,9 +44,8 @@ const styles = {
 
 class Profile extends React.Component {
 
-    constructor(){
-        super();
-
+    constructor(props){
+        super(props);
         this.state={
             name: null,
             contactNum: null,
@@ -55,13 +54,23 @@ class Profile extends React.Component {
         }
     }
 
+    componentWillUpdate(nextProps, nextState){
+        console.log(nextProps);
+        console.log(this.props.profileId);
+        if(nextProps.profileId===this.props.profileId){
+            console.log("true")
+        } else {
+            this.fetchUserInfo(nextProps.profileId);
+        }
 
-    componentDidMount(){
-        this.fetchUserInfo();
     }
 
-    fetchUserInfo = () => {
-        base.fetch('users/'+ this.props.profileId, {
+    componentDidMount(){
+        this.fetchUserInfo(this.props.profileId);
+    }
+
+    fetchUserInfo = (id) => {
+        base.fetch('users/'+ id, {
             context: this,
             then(data) {
                 if (data === null) {
@@ -78,6 +87,7 @@ class Profile extends React.Component {
 
         })
     };
+
     handleSave = (event) => {
         event.preventDefault();
         base.update('users/'+this.props.uid, {

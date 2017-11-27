@@ -82,15 +82,17 @@ class Login extends React.Component{
     }
 
     authWithFacebook = () => {
+        console.log('1');
         base.auth().signInWithPopup(facebookProvider)
             .then((result, error) => {
                 if(error){
                     console.log(error)
                 } else {
-
+                    console.log('2');
                     base.fetch('users/'+ result.user.uid, {
                         context: this,
                         then(data) {
+                            console.log('3');
                             if (data === null) {
                                 base.post('users/'+result.user.uid, {
                                     data: {
