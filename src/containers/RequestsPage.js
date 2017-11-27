@@ -1,7 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
 import Subheader from 'material-ui/Subheader';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
 class RequestsPage extends React.Component {
     render(){
@@ -15,35 +14,13 @@ class RequestsPage extends React.Component {
             title: {
                 fontWeight: 'bold',
                 fontSize: '30px'
-            },
-            columns: {
-              name: {
-                width: '50%'
-              },
-              initerests: {
-                width: '50%'
-              },
             }
-        };
-
+        }
         return(
             <div className="requestPaper">
-                <Header styles={styles.header}/>
-
                 <div style={styles.container}>
                     <Subheader style={styles.title}>Requests</Subheader>
                 </div>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHeaderColumn style={styles.columns.name}>Name</TableHeaderColumn>
-                      <TableHeaderColumn style={styles.columns.interests}>Interests Matched</TableHeaderColumn>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-
-                  </TableBody>
-                </Table>
             </div>
         )
     }
