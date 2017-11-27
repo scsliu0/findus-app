@@ -5,7 +5,7 @@ import TextField from 'material-ui/TextField';
 import Subheader from 'material-ui/Subheader';
 
 import {base} from '../base'
-import {CircularProgress} from "material-ui";
+import {CircularProgress, List, ListItem, Paper} from "material-ui";
 
 const styles = {
     toggleDiv: {
@@ -33,6 +33,12 @@ const styles = {
     title: {
         fontWeight: 'bold',
         fontSize: '30px'
+    },
+    paper:{
+        height: 'auto',
+        width: '50%',
+        marginLeft: 25
+
     }
 };
 
@@ -49,29 +55,32 @@ class Profile extends React.Component {
         }
     }
 
+
     componentDidMount(){
+        this.fetchUserInfo();
+    }
+
+    fetchUserInfo = () => {
         base.fetch('users/'+ this.props.profileId, {
             context: this,
             then(data) {
                 if (data === null) {
                     console.log("null data")
                 } else {
-
-                this.setState({
-                    name: data.name,
-                    contactNum: data.contactNum,
-                    location: data.location,
-                    loading: false
-                });
-                 }
+                    this.setState({
+                        name: data.name,
+                        contactNum: data.contactNum,
+                        location: data.location,
+                        loading: false
+                    });
+                }
             },
 
         })
-    }
-
+    };
     handleSave = (event) => {
         event.preventDefault();
-        base.post('users/'+this.props.uid, {
+        base.update('users/'+this.props.uid, {
             data: {
                 name: this.state.name,
                 contactNum: this.state.contactNum,
@@ -104,67 +113,102 @@ class Profile extends React.Component {
                 </div>
             )
         }
+        if(this.props.uid===this.props.profileId){
+            return (
+            <div>
+
+                <div style={styles.container}>
+                    <Subheader style={styles.title}>Your Profile</Subheader>
+
+                </div>
+
+                <form style={styles.form}>
+                    <TextField
+                        hintText="Name"
+                        floatingLabelText="Name"
+                        fullWidth={true}
+                        onChange={this.handleChange}
+                        value={this.state.name}
+                        name={"name"}
+                    />
+
+                    <TextField
+                        hintText="Interests"
+                        floatingLabelText="Interests(seperated by a comma)"
+                        fullWidth={true}
+                        onChange={this.handleChange}
+                        name={"interests"}
+                    />
+
+                    <TextField
+                        hintText="Contact Number"
+                        floatingLabelText="Contact Number"
+                        fullWidth={true}
+                        onChange={this.handleChange}
+                        value={this.state.contactNum}
+                        name={"contactNum"}
+                    />
+
+                    <TextField
+                        hintText="Location"
+                        floatingLabelText="Location"
+                        fullWidth={true}
+                        onChange={this.handleChange}
+                        value={this.state.location}
+                        name={"location"}
+                    />
+
+
+                    <div style={styles.buttons}>
+                        <RaisedButton label="Save"
+                                      style={styles.saveButton}
+                                      type="submit"
+                                      primary={true}
+                                      onClick={this.handleSave}
+                        />
+                    </div>
+                </form>
+            </div>
+            )
+        }
 
         return(
             <div className="Profile">
 
-
-                <div style={styles.container}>
-                    <Subheader style={styles.title}>Profile</Subheader>
-                </div>
-                <div className="Profile">
-                    <form style={styles.form}>
-                        <TextField
-                            hintText="Name"
-                            floatingLabelText="Name"
-                            fullWidth={true}
-                            onChange={this.handleChange}
-                            value={this.state.name}
-                            name={"name"}
-                        />
-
-                        <TextField
-                            hintText="Interests"
-                            floatingLabelText="Interests(seperated by a comma)"
-                            fullWidth={true}
-                            onChange={this.handleChange}
-                            name={"interests"}
-                        />
-
-                        <TextField
-                            hintText="Contact Number"
-                            floatingLabelText="Contact Number"
-                            fullWidth={true}
-                            onChange={this.handleChange}
-                            value={this.state.contactNum}
-                            name={"contactNum"}
-                        />
-
-                        <TextField
-                            hintText="Location"
-                            floatingLabelText="Location"
-                            fullWidth={true}
-                            onChange={this.handleChange}
-                            value={this.state.location}
-                            name={"location"}
-                        />
-
-
-                        <div style={styles.buttons}>
-                            <RaisedButton label="Cancel"/>
-
-                            <RaisedButton label="Save"
-                                          style={styles.saveButton}
-                                          type="submit"
-                                          primary={true}
-                                          onClick={this.handleSave}
-
-                            />
+                        <div style={styles.container}>
+                            <Subheader style={styles.title}>{this.state.name}'s Profile</Subheader>
                         </div>
-                    </form>
-                </div>
-            </div>
-        )
+                        <Paper style={styles.paper}>
+                            <List>
+                                <Subheader>Name</Subheader>
+                                <ListItem
+                                    primaryText={this.state.name}
+                                />
+                                <Subheader>Contact #</Subheader>
+                                <ListItem
+                                    primaryText={this.state.contactNum}
+                                />
+                                <Subheader>Location</Subheader>
+                                <ListItem
+                                    primaryText={this.state.location}
+                                />
+                                <hr/>
+                                <ListItem
+                                    primaryText={'Interests'}
+                                    initiallyOpen={true}
+                                    nestedItems={[
+                                        <ListItem
+                                        primaryText={'Hockey'}
+                                        />
+                                    ]}
+                                />
+                            </List>
+                        </Paper>
+                    </div>
+
+
+
+            )
     }
 }
 

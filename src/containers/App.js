@@ -166,13 +166,6 @@ class App extends React.Component {
     };
 
     render(){
-        if(this.state.authenticated === false) {
-            return(
-                <div>
-                    <Login/>
-                </div>
-            )
-        }
         if(this.state.loading === true) {
             return(
                 <div>
@@ -183,12 +176,19 @@ class App extends React.Component {
                 </div>
             )
         }
+        if(this.state.authenticated === false) {
+            return(
+                <div>
+                    <Login/>
+                </div>
+            )
+        }
 
         if(this.props.pattern===url+'profile') {
             return(
                 <div>
                     <Header styles={styles.header} authenticated={this.state.authenticated} userId={this.state.uid}/>
-                    <Profile uid={this.state.uid} profileId={this.state.urlUid} interests={this.state.interests} loadSamples={this.loadSamples}/>
+                    <Profile uid={this.state.uid} profileId={this.props.params.userId} interests={this.state.interests} loadSamples={this.loadSamples}/>
                 </div>
             )
         }
@@ -226,24 +226,6 @@ class App extends React.Component {
             <div className="App">
                 <Header styles={styles.header} authenticated={this.state.authenticated} userId={this.state.uid}/>
 
-                <Paper zDepth={3}>
-                    <div className="tabular">
-                        <Tabs>
-                            <Tab onActive={this.handleActive} style={{background:"#11C1F7"}} label="Profile">
-                                <Profile currentUserId={this.state.uid} profileId={this.state.urlUid} interests={this.state.interests} loadSamples={this.loadSamples}/>
-                            </Tab>
-                            <Tab style={{background:"#11C1F7"}} label="Search">
-                                <SearchPage />
-                            </Tab>
-                            <Tab style={{background:"#11C1F7"}} label="Requests">
-                                <RequestsPage />
-                            </Tab>
-                        </Tabs>
-                    </div>
-                </Paper>
-                <div className="Tabular">
-
-                </div>
             </div>
         )
     }
