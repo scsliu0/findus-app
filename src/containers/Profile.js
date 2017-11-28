@@ -51,7 +51,8 @@ class Profile extends React.Component {
             name: null,
             contactNum: null,
             location: null,
-            loading: true
+            loading: true,
+            uid: null,
         }
     }
 
@@ -70,6 +71,7 @@ class Profile extends React.Component {
                     this.setState({
                         name: data.name,
                         contactNum: data.contactNum,
+                        uid: this.props.uid,
                         location: data.location,
                         loading: false
                     });
@@ -84,7 +86,8 @@ class Profile extends React.Component {
             data: {
                 name: this.state.name,
                 contactNum: this.state.contactNum,
-                location: this.state.location
+                location: this.state.location,
+                uid: this.state.uid
             },
             then(err){
                 if(!err){

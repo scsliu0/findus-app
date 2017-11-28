@@ -102,37 +102,20 @@ class App extends React.Component {
         };
     }
 
-    componentDidMount() {
-        /*base.fetch('users/', {
-            context: this,
-            then(data) {
-                if (data === null) {
-                    console.log("null data")
-                } else {
-                
-                    this.setState({
-                        userlist: data
-                    })
-                }
-            },
-        })*/
-        
-    }
-
     componentWillMount() {
         this.ref = base.syncState('/users/' + this.props.params.userId + '/interests',
             {
                 context: this,
                 state: 'interests'
             });
-        
+
             base.fetch('users/', {
                 context: this,
                 then(data) {
                     if (data === null) {
                         console.log("null data")
                     } else {
-                    
+
                         this.setState({
                             userlist: data
                         })
@@ -142,8 +125,8 @@ class App extends React.Component {
         /*this.ref = base.syncState('/users/',{
                 context: this,
                 state: 'userlist'
-        });*/ 
-        
+        });*/
+
         this.removeAuthListener = base.auth().onAuthStateChanged((user) => {
 
             if(user) {
@@ -251,7 +234,7 @@ class App extends React.Component {
             return(
                 <div>
                     <Header styles={styles.header} authenticated={this.state.authenticated} userId={this.state.uid}/>
-                    <Requests uid={this.state.uid}/>
+                    <Requests uid={this.state.uid} userlist={this.state.userlist}/>
                 </div>
             )
         }
