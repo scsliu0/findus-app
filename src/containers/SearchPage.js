@@ -1,11 +1,9 @@
 import React from 'react';
-import Header from '../components/Header';
 import Subheader from 'material-ui/Subheader';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import {grey200, grey500} from 'material-ui/styles/colors';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import {base} from '../base';
 
 class SearchPage extends React.Component {
     render(){
@@ -42,7 +40,7 @@ class SearchPage extends React.Component {
                     <Subheader style={styles.title}>Search for Users</Subheader>
                     <Table>
                       <TableHeader  displaySelectAll={false}
-                                    adjustForCheckbox = {false}>
+                                    adjustForCheckbox={false}>
                         <TableRow>
                           <TableHeaderColumn style={styles.columns.name}>Name</TableHeaderColumn>
                           <TableHeaderColumn style={styles.columns.interests}>Interests</TableHeaderColumn>
@@ -51,7 +49,7 @@ class SearchPage extends React.Component {
                       </TableHeader>
                       <TableBody displayRowCheckbox={false}>
                         {Object.values(this.props.userlist).map((user) => {
-                            console.log(user.name)
+                            console.log(user.name);
                             return (
                                 <TableRow>
                                   <TableRowColumn style={styles.columns.name}>{user.name}</TableRowColumn>

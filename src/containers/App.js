@@ -1,17 +1,11 @@
 //Main App page
 import React from 'react';
-
-import {Tabs, Tab} from 'material-ui/Tabs';
-import Paper from 'material-ui/Paper';
 import {CircularProgress} from "material-ui";
 import {grey500, white} from 'material-ui/styles/colors';
 
 
-import SearchPage from './SearchPage';
-import RequestsPage from './RequestsPage';
 
 import Profile from "./Profile";
-import sampleInterests from '../sample-interests';
 import {base} from '../base'
 import Header from "../components/Header";
 import Connections from "../containers/ConnectionsPage"
@@ -102,23 +96,6 @@ class App extends React.Component {
         };
     }
 
-    componentDidMount() {
-        /*base.fetch('users/', {
-            context: this,
-            then(data) {
-                if (data === null) {
-                    console.log("null data")
-                } else {
-                
-                    this.setState({
-                        userlist: data
-                    })
-                }
-            },
-        })*/
-        
-    }
-
     componentWillMount() {
         this.ref = base.syncState('/users/' + this.props.params.userId + '/interests',
             {
@@ -138,11 +115,7 @@ class App extends React.Component {
                         })
                     }
                 },
-            })
-        /*this.ref = base.syncState('/users/',{
-                context: this,
-                state: 'userlist'
-        });*/ 
+            });
         
         this.removeAuthListener = base.auth().onAuthStateChanged((user) => {
 
@@ -176,30 +149,6 @@ class App extends React.Component {
         this.setState({ users });
     }
 
-    addInterest(interest){
-        const interests = {...this.state.interests};
-        const timeStamp = Date.now();
-        interests['interest-'+timeStamp] = interest;
-        this.setState({interests});
-    }
-
-    removeInterest(key) {
-        const interests = {...this.state.interests};
-        interests[key] = null;
-        this.setState({interests});
-    }
-
-    handleActive = () => {
-        if(this.state.uid){
-            this.context.router.transitionTo('/user/'+this.state.uid);
-        }
-    };
-
-    loadSamples =()=>{
-        this.setState({
-            interests: sampleInterests
-        })
-    };
 
     render(){
         if(this.state.loading === true) {
@@ -224,7 +173,7 @@ class App extends React.Component {
             return(
                 <div>
                     <Header styles={styles.header} authenticated={this.state.authenticated} userId={this.state.uid}/>
-                    <Profile uid={this.state.uid} profileId={this.props.params.userId} interests={this.state.interests} loadSamples={this.loadSamples}/>
+                    <Profile uid={this.state.uid} profileId={this.props.params.userId} interests={this.state.interests}/>
                 </div>
             )
         }
@@ -272,5 +221,3 @@ export default App
 App.contextTypes = {
     router: React.PropTypes.object
 };
-
-//<Menubar authenticated={this.state.authenticated} />

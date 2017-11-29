@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from '../components/Header';
 import Subheader from 'material-ui/Subheader';
 
 class RequestsPage extends React.Component {

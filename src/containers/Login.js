@@ -108,9 +108,7 @@ class Login extends React.Component{
                                     }
                                 });
                             }
-
                             console.log(result.user.uid + " signed in with Facebook");
-
 
                             this.context.router.transitionTo('/user/' + result.user.uid + '/profile');
                         }
@@ -167,7 +165,7 @@ class Login extends React.Component{
                 if(providers.length===0) {
                     //create user
                     return base.auth().createUserWithEmailAndPassword(data.email,data.password)
-                        .then((result,error) =>{
+                        .then((result) =>{
                         console.log(result);
                                         base.fetch('users/' + result.uid, {
                                             context: this,
@@ -206,8 +204,7 @@ class Login extends React.Component{
                 } else {
                     //they have created an account with email/password. Log them in here
                     return base.auth().signInWithEmailAndPassword(data.email, data.password)
-                        .then((result,error) => {
-                        console.log("here?");
+                        .then((result) => {
                             this.context.router.transitionTo('/user/'+result.uid+'/profile');
                         })
                 }
@@ -315,25 +312,3 @@ export default Login
 Login.contextTypes = {
     router: React.PropTypes.object
 };
-
-/*
-<Paper style={styles.paperStyle} zDepth={3} className="login-page">
-                    <h3>Log In/Sign Up</h3>
-                    <hr/>
-                    <RaisedButton primary={true} onClick={()=>this.authWithFacebook()} label={"Log In With Facebook"}/>
-                    <hr/>
-                    <RaisedButton primary={true} onClick={()=>this.authWithGoogle()} label={"Log In With Google"}/>
-                    <hr/>
-                    <form ref={(form)=>{this.loginForm = form}}>
-                        <TextField hintText={"Email"} floatingLabelText={"Email"} floatingLabelFixed={true} onChange={this.handleChange} type="email" name={"email"} className="input"/>
-                        <TextField hintText={"Password"} floatingLabelText={"Password"} floatingLabelFixed={true} onChange={this.handleChange} type="password" name={"password"} className="input"/>
-                        <hr/>
-                        <RaisedButton style={{background:"#11C1F7"}} primary={true} onClick={this.authWithEmailPassword} label={"Log In"}/>
-                    </form>
-                    <hr/>
-                    <div>
-                        <h5>Note</h5>
-                        This form will create an account if you don't have one already, otherwise it will attempt to log you in.
-                    </div>
-                </Paper>
- */

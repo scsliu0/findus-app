@@ -8,14 +8,9 @@ import ThemeDefault from './theme-default';
 import NotFound from './containers/NotFound';
 import SignUp from './containers/SignUp';
 import App from './containers/App';
-import ConnectionsPage from './containers/ConnectionsPage';
-import Profile from './containers/Profile';
-import RequestsPage from './containers/RequestsPage';
-import SearchPage from './containers/SearchPage';
 import Login from './containers/Login';
 import Logout from './containers/Logout'
 
-import Header from './components/Header';
 
 const Root = () => {
     return(
@@ -34,7 +29,7 @@ const Root = () => {
             </div>
         </BrowserRouter>
     )
-}
+};
 
 render(
   <MuiThemeProvider muiTheme={ThemeDefault}><Root /></MuiThemeProvider>,
