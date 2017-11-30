@@ -2,7 +2,6 @@ import React from 'react';
 import Subheader from 'material-ui/Subheader';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-import Snackbar from 'material-ui/Snackbar';
 import {blue900, white} from 'material-ui/styles/colors';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import {base} from '../base';
@@ -13,68 +12,47 @@ class ConnectionsPage extends React.Component {
     constructor(){
         super();
         this.state = {
-            open: false,
-            snackText: "",
             userList: {},
-            acceptedtList: {}
+            acceptedList: {}
         };
     }
 
     componentWillMount(){
-        base.fetch('users/', {
+    /*    base.fetch('users/', {
             context: this,
             then(data) {
-
+                console.log(data);
                 if (data === null) {
-                    //don't set userList or username yet, you're on the login page
+                    //don't set userlist or username yet, you're on the login page
                 } else {
                     this.setState({
                         userList: data
                     })
+                    console.log(this.state.userlist);
                 }
             },
         });
+        */
 
-        base.fetch('users/'+this.props.uid+'/acceptedtList', {
+        base.fetch('users/'+this.props.uid+'/acceptedList', {
             context: this,
             then(data) {
-
+                console.log(data);
+                console.log(this.state.acceptedList);
                 if (data === null) {
                     //don't set userlist or username yet, you're on the login page
                 } else {
                     this.setState({
                         acceptedList: data
                     })
+                    console.log(this.state.acceptedList);
                 }
             },
         });
     }
 
-    componentDidUpdate(){
-
-    }
-
-    handleTouchTap = () => {
-        this.setState({
-          open: true,
-        });
-      };
-
-      handleRequestClose = () => {
-        this.setState({
-          open: false,
-        });
-      };
-
-      requestSent = () => {
-          this.setState({
-              open:true,
-              snackText: "Request Sent!"
-          });
-      };
-
       handleViewProfile = (targetId) => {
-          console.log(targetId);
+          console.log("Target "+targetId);
           this.context.router.transitionTo('/user/' + targetId + '/profile');
           console.log("context")
       };
@@ -124,20 +102,13 @@ class ConnectionsPage extends React.Component {
                         </TableRow>
                       </TableHeader>
                       <TableBody displayRowCheckbox={false}>
-                          {
+                         {
                               Object
-                                  .keys(this.state.userList)
-                                  .map(user => <FriendsList key={user} user={this.state.userList[user]} index={user} uid={this.props.uid} viewProfile={this.handleViewProfile}/>)
+                                  .keys(this.state.acceptedList)
+                                  .map(user => <FriendsList key={user} user={this.state.acceptedList[user]} index={user} uid={this.props.uid} viewProfile={this.handleViewProfile}/>)
                           }
                       </TableBody>
                     </Table>
-                    <Snackbar
-                              open={this.state.open}
-                              message={this.state.snackText}
-                              bodyStyle={{background: blue900}}
-                              autoHideDuration={3000}
-                              onRequestClose={this.handleRequestClose}
-                    />
                 </div>
             </div>
         )

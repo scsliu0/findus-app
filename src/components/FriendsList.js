@@ -43,22 +43,16 @@ const styles={
 class FriendsList extends React.Component{
     render(){
         const {user, uid} = this.props;
-        //If user has interests
-        if(uid!==user.uid) {
             return (
                 <TableRow>
                     <TableRowColumn style={styles.columns.name}>
 
-                        {user.name
-                            ? <h4>{user.name}</h4>
-                            : <p> </p>
-                        }
+                        {user.name}
 
                     </TableRowColumn>
 
                     <TableRowColumn style={styles.columns.interests}>
-                        {user.interests
-                            ?                  //If user has interests, print them. If not, print blank
+
                             <div style={styles.wrapper}>
                                 {Object.values(user.interests).map((interests) => {
                                     return (
@@ -66,8 +60,6 @@ class FriendsList extends React.Component{
                                     )
                                 })}
                             </div>
-                            : <p> </p>
-                        }
 
                     </TableRowColumn>
                     <TableRowColumn style={styles.columns.requests}>
@@ -75,14 +67,11 @@ class FriendsList extends React.Component{
                                               labelColor={white}
                                               backgroundColor={blue500}
                                               style={styles.profileButton}
-                                              onClick={() => this.props.viewProfile(user.uid)}
+                                              onClick={() => this.props.viewProfile(this.props.index)}
                         />
                     </TableRowColumn>
                 </TableRow>
             )
-        } else {
-            return null;
-        }
 
     }
 }
