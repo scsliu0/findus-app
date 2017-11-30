@@ -7,7 +7,6 @@ import MenuItem from 'material-ui/MenuItem';
 import Drawer from 'material-ui/Drawer';
 import {spacing, typography} from 'material-ui/styles';
 import Avatar from 'material-ui/Avatar';
-import avatar from '../img/stock.svg';
 import {RaisedButton} from "material-ui";
 
 class Header extends React.Component{
