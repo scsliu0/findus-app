@@ -66,7 +66,8 @@ class Profile extends React.Component {
             location: null,
             loading: true,
             userInterests: {},
-            interests: {}
+            interests: {},
+            userList: {},
         }
     }
 
@@ -74,14 +75,24 @@ class Profile extends React.Component {
 
         if(prevProps.profileId===this.props.uid){
 
+        } else if (this.props.acceptedList[this.props.profileId]) {
+
+            // if(!this.state.userList[this.props.profileId]){
+            //     this.context.router.transitionTo('/user/' + this.props.uid + '/profile');
+            // }
         } else {
             this.fetchUserInfo(this.props.profileId);
         }
     }
 
+    componentWillMount(){
+        this.fetchUsers();
+    }
+
     componentDidMount(){
         this.fetchUserInfo(this.props.profileId);
         this.fetchMasterInterests();
+
     }
 
     fetchMasterInterests =  () => {
@@ -108,13 +119,27 @@ class Profile extends React.Component {
                         contactNum: data.contactNum,
                         location: data.location,
                         loading: false,
-                        userInterests: data.interests
+                        userInterests: data.interests,
                     });
                 }
             },
         })
     };
+    fetchUsers = () => {
+        base.fetch('users/', {
+            context: this,
+            then(data) {
 
+                if (data === null) {
+                    //don't set userList or username yet, you're on the login page
+                } else {
+                    this.setState({
+                        userList: data
+                    })
+                }
+            },
+        });
+    };
     handleSave = (event) => {
         event.preventDefault();
         if(this.state.userInterests) {
@@ -313,3 +338,6 @@ class Profile extends React.Component {
 }
 
 export default Profile;
+Profile.contextTypes = {
+    router: React.PropTypes.object
+};
