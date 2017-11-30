@@ -90,6 +90,7 @@ class SearchPage extends React.Component {
 
     render(){
 
+
         const styles={
             container: {
               margin: '80px 20px 20px 15px'
@@ -125,7 +126,7 @@ class SearchPage extends React.Component {
                                     adjustForCheckbox={false}>
                         <TableRow>
                           <TableHeaderColumn style={styles.columns.name}>Name</TableHeaderColumn>
-                          <TableHeaderColumn style={styles.columns.interests}>Interests</TableHeaderColumn>
+                          <TableHeaderColumn style={styles.columns.interests}>Matched Interests</TableHeaderColumn>
                           <TableHeaderColumn style={styles.columns.request}>Request Profile</TableHeaderColumn>
                         </TableRow>
                       </TableHeader>
@@ -133,7 +134,7 @@ class SearchPage extends React.Component {
                           {
                               Object
                                   .keys(this.state.userList)
-                                  .map(user => <SearchResult key={user} user={this.state.userList[user]} index={user} uid={this.props.uid} sendRequest={this.handleSendRequest}/>)
+                                  .map(user => <SearchResult key={user} user={this.state.userList[user]} index={user} uid={this.props.uid} userInterests={this.state.userList[this.props.uid].interests} sendRequest={this.handleSendRequest}/>)
                           }
                       </TableBody>
                     </Table>

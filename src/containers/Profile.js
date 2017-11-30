@@ -67,7 +67,6 @@ class Profile extends React.Component {
             loading: true,
             userInterests: {},
             interests: {}
-
         }
     }
 
