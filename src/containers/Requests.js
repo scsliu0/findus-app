@@ -12,19 +12,19 @@ class Requests extends React.Component {
     constructor(){
         super();
         this.state = {
-            open: false,
+            snackopen: false,
         };
     }
 
     handleTouchTap = () => {
         this.setState({
-          open: true,
+          snackopen: true,
         });
       };
 
     handleRequestClose = () => {
         this.setState({
-            open: false,
+            snackopen: false,
         });
     };
 
@@ -72,8 +72,7 @@ class Requests extends React.Component {
                       </TableHeader>
                       <TableBody displayRowCheckbox={false}>
                           {Object.values(this.props.userlist[this.props.uid].requestList).map((user) => {
-                              console.log(this.pr)
-                              console.log(user);
+                              console.log(this.props.userlist[this.props.uid].requestList);
                               if(this.props.uid !== user.uid){
                                   return (
                                       <TableRow>
@@ -88,7 +87,7 @@ class Requests extends React.Component {
                                                                       console.log("Person requested for "+user.name);
                                                                       console.log("Person sending "+this.props.uid);
                                                                       this.handleTouchTap();
-                                                                      /*base.update('users/'+user.uid + '/acceptedList/'+this.props.uid, {
+                                                                      base.update('users/'+user.uid + '/acceptedList/'+this.props.uid, {
                                                                          data:{
                                                                              uid: this.props.uid,
                                                                              name: this.props.userlist[this.props.uid].name,
@@ -96,11 +95,15 @@ class Requests extends React.Component {
                                                                              },
                                                                              then(err){
                                                                                  if(!err){
-                                                                                     console.log("request sent")
+                                                                                     console.log("Request Accepted");
                                                                                  }
                                                                              }
                                                                          });
-                                                                         base.update('users/'+this.props.uid + '/acceptedList/'+user.uid, {
+                                                                         base.remove('users/'+this.props.uid+'/requestedList/'+user.uid, function(err){
+                                                                           if(!err){
+                                                                             console.log('Request Removed from List');
+                                                                           }
+                                                                         });                                                                         /*base.update('users/'+this.props.uid + '/acceptedList/'+user.uid, {
                                                                             data:{
                                                                                 uid: user.uid,
                                                                                 name: user.userlist[this.props.uid].name,
@@ -123,7 +126,7 @@ class Requests extends React.Component {
                       </TableBody>
                     </Table>
                     <Snackbar
-                              open={this.state.open}
+                              open={this.state.snackopen}
                               message="Request Accepted"
                               autoHideDuration={3000}
                               onRequestClose={this.handleRequestClose}
