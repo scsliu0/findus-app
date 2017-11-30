@@ -255,8 +255,8 @@ class Profile extends React.Component {
                                     />
                                 </div>
                         </Tab>
-                        <Tab label={"Contact"} style={styles.tabs}>
-                            <h1>Contact Info</h1>
+                        <Tab label={"Social Links"} style={styles.tabs}>
+                            <h1>Social Links</h1>
                         </Tab>
                     </Tabs>
                 </Card>
@@ -294,9 +294,16 @@ class Profile extends React.Component {
                             </List>
                         </Tab>
                         <Tab label={"Interests"} style={styles.tabs}>
-
+                            <CardTitle title={this.state.name+"'s Interests"}/>
+                                <List>
+                                    {
+                                        Object
+                                            .keys(this.state.interests)
+                                            .map(key => <Interest key={key} details={this.state.interests[key]} index={key} userInterests={this.state.userInterests} addToInterests={this.addToInterests} removeFromInterests={this.removeFromInterests} editable={false}/>)
+                                    }
+                                </List>
                         </Tab>
-                        <Tab label={"Contact"} style={styles.tabs}>
+                        <Tab label={"Social Links"} style={styles.tabs}>
 
                         </Tab>
                     </Tabs>

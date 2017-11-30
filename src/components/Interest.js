@@ -1,6 +1,11 @@
 import React from 'react';
-import {Checkbox} from "material-ui";
+import {Checkbox, Chip} from "material-ui";
 
+const styles ={
+    chip: {
+        margin: 8
+    }
+}
 
 class Interest extends React.Component{
     constructor(){
@@ -56,14 +61,13 @@ class Interest extends React.Component{
         const {details} = this.props;
         if(this.props.editable){
             return(
-
                 <Checkbox label={details} checked={this.state.checked} onCheck={this.handleChange}/>
             )
         }
 
         return(
-
-            <Checkbox label={details} checked={this.state.checked} onCheck={this.handleChange}/>
+            <Chip style={styles.chip}>{details}</Chip>
+            //<Checkbox label={details} checked={this.state.checked} onCheck={this.handleChange}/>
         )
 
     }
