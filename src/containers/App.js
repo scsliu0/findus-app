@@ -140,6 +140,7 @@ class App extends React.Component {
     componentDidMount() {
         console.log(this.state.userlist);
     }
+    
     componentWillUpdate(nextProps, nextState) {
         if (this.props.pattern === '/' && nextState.authenticated) {
             this.context.router.transitionTo('/user/' + nextState.uid + '/profile');
@@ -217,7 +218,7 @@ class App extends React.Component {
             return(
                 <div>
                     <Header styles={styles.header} authenticated={this.state.authenticated} userId={this.state.uid} username={this.state.username}/>
-                    <Requests uid={this.state.uid}/>
+                    <Requests uid={this.state.uid} userlist={this.state.userlist}/>
                 </div>
             )
         }
