@@ -89,6 +89,13 @@ class Requests extends React.Component {
         });
     };
 
+    requestSent = () => {
+        this.setState({
+            open:true,
+            snackText: "Request Accepted!"
+        });
+    };
+
     handleAcceptRequest = (targetId,targetName,targetInterests) => {
         base.update('users/'+this.props.uid+'/acceptedList/'+targetId, {
            data:{
@@ -133,7 +140,11 @@ class Requests extends React.Component {
 
         const requestList = {...this.state.requestList};
         delete requestList[targetId];
-        this.setState({requestList});
+        this.setState({
+            requestList,
+            open: true,
+            snackText: "Request Accepted!"
+        });
 };
     handleDeclineRequest = (targetId) => {
 
@@ -191,7 +202,7 @@ class Requests extends React.Component {
 
 
         return(
-            <div className="SearchPage">
+            <div className="RequestsPage">
                 <div style={styles.container}>
                     <Subheader style={styles.title}>Incoming Requests</Subheader>
                     <Table>
