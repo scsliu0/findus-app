@@ -68,18 +68,14 @@ class Profile extends React.Component {
             userInterests: {},
             interests: {},
             userList: {},
+            acceptedList: {}
         }
     }
 
-    componentDidUpdate(prevProps, prevState){
+    componentDidUpdate(prevProps, prevState) {
 
-        if(prevProps.profileId===this.props.uid){
+        if (prevProps.profileId === this.props.uid) {
 
-        } else if (this.props.acceptedList[this.props.profileId]) {
-
-            // if(!this.state.userList[this.props.profileId]){
-            //     this.context.router.transitionTo('/user/' + this.props.uid + '/profile');
-            // }
         } else {
             this.fetchUserInfo(this.props.profileId);
         }
@@ -87,6 +83,7 @@ class Profile extends React.Component {
 
     componentWillMount(){
         this.fetchUsers();
+
     }
 
     componentDidMount(){
