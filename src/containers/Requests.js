@@ -104,7 +104,7 @@ class Requests extends React.Component {
                                                                               }
                                                                           }
                                                                       })
-                                                                      base.update('users/'+user.uid + '/acceptedList/'+this.props.uid, {
+                                                                      /*base.update('users/'+user.uid + '/acceptedList/'+this.props.uid, {
                                                                          data:{
                                                                              uid: this.props.uid,
                                                                              name: this.props.userlist[this.props.uid].name,
