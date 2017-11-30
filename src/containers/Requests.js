@@ -77,7 +77,15 @@ class Requests extends React.Component {
                                   return (
                                       <TableRow>
                                         <TableRowColumn  style={styles.columns.name}>{user.name}</TableRowColumn>
-                                        <TableRowColumn  style={styles.columns.interests}>Interests</TableRowColumn>
+                                        <TableRowColumn  style={styles.columns.interests}>
+                                          <ul>
+                                          {Object.values(user.interests).map((interests) =>{
+                                              return(
+                                                  <li>{interests}</li>
+                                              )
+                                          })}
+                                          </ul>
+                                        </TableRowColumn>
                                         <TableRowColumn  style={styles.columns.requests}>
                                             <FloatingActionButton zDepth={0}
                                                                   mini={true}
