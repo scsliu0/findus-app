@@ -89,14 +89,13 @@ class App extends React.Component {
             urlUid: null,
             owner: null,
             userlist: {},
-            interests: {},
             authenticated: false,
             loading: true,
             username: ""
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
             base.fetch('users/', {
                 context: this,
                 then(data) {
@@ -148,6 +147,7 @@ class App extends React.Component {
 
 
     render(){
+
         if(this.state.loading === true) {
             return(
                 <div>
@@ -187,7 +187,7 @@ class App extends React.Component {
         if(this.props.pattern===url+'search') {
             return(
                 <div>
-                    <Header styles={styles.header} authenticated={this.state.authenticated} userId={this.state.uid} username={this.state.username}/>
+                    <Header styles={styles.header} authenticated={this.state.authenticated} userInterests={this.state.interests} userId={this.state.uid} username={this.state.username}/>
                     <Search uid={this.state.uid}/>
                 </div>
             )

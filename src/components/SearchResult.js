@@ -42,8 +42,20 @@ const styles={
 class SearchResult extends React.Component{
     render(){
         const {user, uid} = this.props;
-        //If user has interests
-        if(uid!==user.uid) {
+
+        if(user.interests) {
+            for (var key in user.interests) {
+                if (key in this.props.userInterests) {
+                    user.interests[key] = this.props.userInterests[key]
+                } else {
+                    delete user.interests[key]
+                }
+
+            }
+        }
+
+        //If user has interests and isn't you
+        if(uid!==user.uid&&user.interests) {
             return (
                 <TableRow>
                     <TableRowColumn style={styles.columns.name}>
