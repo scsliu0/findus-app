@@ -73,31 +73,10 @@ class ConnectionsPage extends React.Component {
           });
       };
 
-      handleSendRequest = (targetId) => {
-          if (this.state.userList[this.props.uid].name && this.state.userList[this.props.uid].interests) {
-              base.update('users/' + targetId + '/requestList/' + this.props.uid, {
-                  data: {
-                      name: this.state.userList[this.props.uid].name,
-                      interests: this.state.userList[this.props.uid].interests
-                  },
-                  then(err) {
-                      if (!err) {
-                          console.log("request sent");
-                      }
-                  }
-              });
-
-              this.setState({
-                  open:true,
-                  snackText: "Request Sent!"
-              });
-          } else {
-              this.setState({
-                  open:true,
-                  snackText: "Configure your account correctly first"
-              })
-          }
-
+      handleViewProfile = (targetId) => {
+          console.log(targetId);
+          this.context.router.transitionTo('/user/' + targetId + '/profile');
+          console.log("context")
       };
 
 
@@ -148,7 +127,7 @@ class ConnectionsPage extends React.Component {
                           {
                               Object
                                   .keys(this.state.userList)
-                                  .map(user => <FriendsList key={user} user={this.state.userList[user]} index={user} uid={this.props.uid} sendRequest={this.handleSendRequest}/>)
+                                  .map(user => <FriendsList key={user} user={this.state.userList[user]} index={user} uid={this.props.uid} viewProfile={this.handleViewProfile}/>)
                           }
                       </TableBody>
                     </Table>
@@ -164,5 +143,9 @@ class ConnectionsPage extends React.Component {
         )
     }
 }
+
+ConnectionsPage.contextTypes = {
+    router: React.PropTypes.object
+};
 
 export default ConnectionsPage;

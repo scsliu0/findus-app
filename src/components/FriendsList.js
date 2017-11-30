@@ -1,6 +1,5 @@
 import React from 'react'
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import {Chip, FloatingActionButton, TableRow, TableRowColumn} from "material-ui";
+import {Chip, RaisedButton, TableRow, TableRowColumn} from "material-ui";
 import {blue500, white} from 'material-ui/styles/colors';
 
 const styles={
@@ -14,18 +13,20 @@ const styles={
         fontWeight: 'bold',
         fontSize: '30px'
     },
-    editButton: {
-        fill: white
+    profileButton: {
+        color: 'white',
+        align: 'left'
+
     },
     columns: {
         name: {
             width: '20%'
         },
         interests: {
-            width: '62%'
+            width: '58%'
         },
         edit: {
-            width: '20%'
+            width: '22%'
         }
     },
     chip: {
@@ -70,15 +71,12 @@ class FriendsList extends React.Component{
 
                     </TableRowColumn>
                     <TableRowColumn style={styles.columns.requests}>
-
-                        <FloatingActionButton zDepth={0}
-                                              mini={true}
+                        <RaisedButton         label="View Profile"
+                                              labelColor={white}
                                               backgroundColor={blue500}
-                                              iconStyle={styles.editButton}
-                                              onClick={() => this.props.sendRequest(user.uid)}
-                        >
-                            <ContentAdd/>
-                        </FloatingActionButton>
+                                              style={styles.profileButton}
+                                              onClick={() => this.props.viewProfile(user.uid)}
+                        />
                     </TableRowColumn>
                 </TableRow>
             )
