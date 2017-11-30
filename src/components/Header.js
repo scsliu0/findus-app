@@ -8,12 +8,34 @@ import Drawer from 'material-ui/Drawer';
 import {spacing, typography} from 'material-ui/styles';
 import Avatar from 'material-ui/Avatar';
 import {Badge, RaisedButton} from "material-ui";
+import {base} from '../base'
 
 class Header extends React.Component{
 
+
+
     constructor(props) {
       super(props);
-      this.state = {open: false};
+      this.state = {
+          open: false,
+          requestNumber: 0
+      };
+    }
+
+    componentWillMount(){
+        base.fetch('users/'+this.props.userId+'/requestList', {
+            context: this,
+            then(data) {
+                console.log(Object.keys(data).length);
+                if (data === null) {
+                    //don't set userlist or username yet, you're on the login page
+                } else {
+                    this.setState({
+                        requestNumber: Object.keys(data).length
+                    })
+                }
+            },
+        });
     }
 
     goToLogin = () => {
@@ -21,7 +43,7 @@ class Header extends React.Component{
     };
 
     goToLogout = () => {
-        this.context.router.transitionTo('/logout');
+        //this.context.router.transitionTo('/logout');
     };
 
     goToSearch = () => {
@@ -103,7 +125,7 @@ class Header extends React.Component{
             marginLeft: 20
           },
             badge: {
-              
+                paddingTop: '3%'
             }
 
         };
@@ -142,7 +164,7 @@ class Header extends React.Component{
                                 <MenuItem style={drawerstyles.logoutItem} onClick={this.goToLogout}>Log Out</MenuItem>
                                 <MenuItem style={drawerstyles.menuItem} onClick={this.goToProfile}>Profile</MenuItem>
                                 <MenuItem style={drawerstyles.menuItem} onClick={this.goToSearch}>Search</MenuItem>
-                                <MenuItem style={drawerstyles.menuItem} onClick={this.goToRequests}><Badge badgeContent={4} style={style.badge} children={'Requests'}/></MenuItem>
+                                <MenuItem style={drawerstyles.menuItem} onClick={this.goToRequests}>Requests<Badge badgeContent={this.state.requestNumber} secondary={blue600} style={style.badge}/></MenuItem>
                                 <MenuItem style={drawerstyles.menuItem} onClick={this.goToConnections}>Connections</MenuItem>
                             </div>
                         </Drawer>
