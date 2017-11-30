@@ -26,7 +26,7 @@ class Header extends React.Component{
         base.fetch('users/'+this.props.userId+'/requestList', {
             context: this,
             then(data) {
-                console.log(Object.keys(data).length);
+                console.log("here");
                 if (data === null) {
                     //don't set userlist or username yet, you're on the login page
                 } else {
@@ -43,7 +43,7 @@ class Header extends React.Component{
     };
 
     goToLogout = () => {
-        //this.context.router.transitionTo('/logout');
+        this.context.router.transitionTo('/logout');
     };
 
     goToSearch = () => {

@@ -91,7 +91,8 @@ class App extends React.Component {
             userlist: {},
             authenticated: false,
             loading: true,
-            username: ""
+            username: "",
+            acceptedList: {}
         };
     }
 
@@ -105,7 +106,8 @@ class App extends React.Component {
                     } else {
                         this.setState({
                             userlist: data,
-                            username: data[this.state.uid].name
+                            username: data[this.state.uid].name,
+                            acceptedList: data[this.state.uid].acceptedList
                         })
                     }
                 },
@@ -113,6 +115,20 @@ class App extends React.Component {
         this.removeAuthListener = base.auth().onAuthStateChanged((user) => {
 
             if(user) {
+                base.fetch('users/', {
+                    context: this,
+                    then(data) {
+
+                        if (data === null || !data[user.uid].acceptedList) {
+                            //don't set userlist or username yet, you're on the login page
+                        } else {
+                            this.setState({
+                                userlist: data,
+                                acceptedList: data[user.uid].acceptedList
+                            })
+                        }
+                    },
+                });
                 this.setState({
                     authenticated: true,
                     uid: user.uid,
@@ -179,7 +195,7 @@ class App extends React.Component {
             return(
                 <div>
                     <Header styles={styles.header} authenticated={this.state.authenticated} userId={this.state.uid} username={this.state.username}/>
-                    <Profile uid={this.state.uid} profileId={this.props.params.userId}/>
+                    <Profile uid={this.state.uid} profileId={this.props.params.userId} acceptedList={this.state.acceptedList}/>
                 </div>
             )
         }
