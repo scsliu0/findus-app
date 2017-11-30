@@ -164,7 +164,7 @@ class Header extends React.Component{
                                 <MenuItem style={drawerstyles.logoutItem} onClick={this.goToLogout}>Log Out</MenuItem>
                                 <MenuItem style={drawerstyles.menuItem} onClick={this.goToProfile}>Profile</MenuItem>
                                 <MenuItem style={drawerstyles.menuItem} onClick={this.goToSearch}>Search</MenuItem>
-                                <MenuItem style={drawerstyles.menuItem} onClick={this.goToRequests}>Requests<Badge badgeContent={this.state.requestNumber} secondary={blue600} style={style.badge}/></MenuItem>
+                                <MenuItem style={drawerstyles.menuItem} onClick={this.goToRequests}>Requests<Badge badgeContent={this.state.requestNumber} secondary={true} style={style.badge}/></MenuItem>
                                 <MenuItem style={drawerstyles.menuItem} onClick={this.goToConnections}>Connections</MenuItem>
                             </div>
                         </Drawer>
