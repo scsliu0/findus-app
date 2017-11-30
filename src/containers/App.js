@@ -92,7 +92,8 @@ class App extends React.Component {
             userlist: {},
             interests: {},
             authenticated: false,
-            loading: true
+            loading: true,
+            username: ""
         };
     }
 
@@ -109,14 +110,14 @@ class App extends React.Component {
                     if (data === null) {
                         console.log("null data")
                     } else {
-                    
+                        console.log(data[this.state.uid].name);
                         this.setState({
+                            username: data[this.state.uid].name,
                             userlist: data
                         })
                     }
                 },
             });
-        
         this.removeAuthListener = base.auth().onAuthStateChanged((user) => {
 
             if(user) {
@@ -135,7 +136,15 @@ class App extends React.Component {
             }
         });
 
+    }
 
+    componentDidMount() {
+        console.log(this.state.userlist);
+    }
+    componentWillUpdate(nextProps, nextState){
+        if(this.props.pattern==='/' && nextState.authenticated){
+            this.context.router.transitionTo('/user/'+nextState.uid+'/profile');
+        }
     }
 
     componentWillUnmount() {
@@ -169,10 +178,19 @@ class App extends React.Component {
             )
         }
 
+        if(this.props.pattern === '/' && this.state.authenticated){
+            return(
+                <div>
+                    <Header styles={styles.header} authenticated={this.state.authenticated} userId={this.state.uid} username={this.state.username}/>
+                    <Profile uid={this.state.uid} profileId={this.state.uid} interests={this.state.interests}/>
+                </div>
+            )
+        }
+
         if(this.props.pattern===url+'profile') {
             return(
                 <div>
-                    <Header styles={styles.header} authenticated={this.state.authenticated} userId={this.state.uid}/>
+                    <Header styles={styles.header} authenticated={this.state.authenticated} userId={this.state.uid} username={this.state.username}/>
                     <Profile uid={this.state.uid} profileId={this.props.params.userId} interests={this.state.interests}/>
                 </div>
             )
@@ -181,7 +199,7 @@ class App extends React.Component {
         if(this.props.pattern===url+'search') {
             return(
                 <div>
-                    <Header styles={styles.header} authenticated={this.state.authenticated} userId={this.state.uid}/>
+                    <Header styles={styles.header} authenticated={this.state.authenticated} userId={this.state.uid} username={this.state.username}/>
                     <Search uid={this.state.uid} userlist={this.state.userlist} interests={this.state.interests}/>
                 </div>
             )
@@ -190,7 +208,7 @@ class App extends React.Component {
         if(this.props.pattern===url+'connections') {
             return(
                 <div>
-                    <Header styles={styles.header} authenticated={this.state.authenticated} userId={this.state.uid}/>
+                    <Header styles={styles.header} authenticated={this.state.authenticated} userId={this.state.uid} username={this.state.username}/>
                     <Connections uid={this.state.uid} interests={this.state.interests}/>
                 </div>
             )
@@ -199,7 +217,7 @@ class App extends React.Component {
         if(this.props.pattern===url+'requests') {
             return(
                 <div>
-                    <Header styles={styles.header} authenticated={this.state.authenticated} userId={this.state.uid}/>
+                    <Header styles={styles.header} authenticated={this.state.authenticated} userId={this.state.uid} username={this.state.username}/>
                     <Requests uid={this.state.uid}/>
                 </div>
             )
@@ -209,8 +227,7 @@ class App extends React.Component {
 
         return(
             <div className="App">
-                <Header styles={styles.header} authenticated={this.state.authenticated} userId={this.state.uid}/>
-
+                <Header styles={styles.header} authenticated={this.state.authenticated} userId={this.state.uid} username={this.state.username}/>
             </div>
         )
     }

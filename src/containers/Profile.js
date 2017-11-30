@@ -72,12 +72,13 @@ class Profile extends React.Component {
         }
     }
 
-    componentWillUpdate(nextProps){
-        if(nextProps.profileId===this.props.profileId){
-        } else {
-            this.fetchUserInfo(nextProps.profileId);
-        }
+    componentDidUpdate(prevProps, prevState){
 
+        if(prevProps.profileId===this.props.uid){
+
+        } else {
+            this.fetchUserInfo(this.props.profileId);
+        }
     }
 
     componentDidMount(){

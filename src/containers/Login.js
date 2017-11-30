@@ -77,7 +77,6 @@ class Login extends React.Component{
             password: null,
             loginFail: false,
             loginFailText: ""
-            //redirect: false
         }
     }
 
@@ -85,7 +84,7 @@ class Login extends React.Component{
         base.auth().signInWithPopup(facebookProvider)
             .then((result, error) => {
                 if(error){
-                    console.log(error)
+
                 } else {
 
                     base.fetch('users/'+ result.user.uid, {
@@ -99,7 +98,8 @@ class Login extends React.Component{
                                         location: "",
                                         email: result.user.email,
                                         provider: "facebook.com",
-                                        interests: {}
+                                        interests: {},
+                                        uid: result.user.uid
                                     },
                                     then(err){
                                         if(!err){
@@ -115,13 +115,22 @@ class Login extends React.Component{
                     });
                 }
             })
+            .catch((error) => {
+                console.log(error);
+                if(error.code==="auth/account-exists-with-different-credential"){
+                    this.setState({
+                        loginFail: true,
+                        loginFailText:"E-mail already exists for a FindUs account"
+                    });
+                }
+            })
     };
 
     authWithGoogle = () => {
         base.auth().signInWithPopup(googleProvider)
             .then((result, error) => {
                 if (error) {
-                    console.log(error)
+                    console.log("hello?")
                 } else {
 
                     base.fetch('users/' + result.user.uid, {
@@ -135,7 +144,8 @@ class Login extends React.Component{
                                         location: "",
                                         email: result.user.email,
                                         provider: "google.com",
-                                        interests: {}
+                                        interests: {},
+                                        uid: result.user.uid
                                     },
                                     then(err) {
                                         if (!err) {
@@ -150,6 +160,9 @@ class Login extends React.Component{
                     });
 
                 }
+            })
+            .catch((error) => {
+                console.log(error);
             })
     };
 
@@ -178,7 +191,8 @@ class Login extends React.Component{
                                                             location: "",
                                                             email: result.email,
                                                             provider: "findus.com",
-                                                            interests: {}
+                                                            interests: {},
+                                                            uid: result.uid
                                                         },
                                                         then(err) {
                                                             if (!err) {
@@ -194,8 +208,7 @@ class Login extends React.Component{
                         })
 
                 } else if (providers.indexOf("password") === -1) {
-                    //they used google or facebook
-                    this.loginForm.reset();
+
                     this.setState({
                         loginFail: true,
                         loginFailText: "Account already created with that email using Facebook or Google"
@@ -210,13 +223,19 @@ class Login extends React.Component{
                 }
             })
             .catch((error)=>{
-                console.log(error);
+
                 if(error.code === "auth/wrong-password"){
                     this.setState({
                         loginFail: true,
-                        loginFailText: "Invalid email or password"
+                        loginFailText: "Invalid username or password"
+                    });
+                } else if(error.code==="auth/weak-password"){
+                    this.setState({
+                        loginFail: true,
+                        loginFailText: error.message
                     });
                 }
+
             })
     };
 
@@ -224,6 +243,13 @@ class Login extends React.Component{
         event.preventDefault();
         this.setState({
             [event.target.name]: value
+        })
+    };
+
+    handleSnackbarClose = () =>{
+        this.setState({
+            loginFail: false,
+            loginFailText:" "
         })
     };
 
@@ -301,7 +327,7 @@ class Login extends React.Component{
                     open={this.state.loginFail}
                     message={this.state.loginFailText}
                     autoHideDuration={5000}
-                    onRequestClose={this.handleRequestClose}
+                    onRequestClose={this.handleSnackbarClose}
                 />
             </div>
         )
