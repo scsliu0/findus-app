@@ -68,10 +68,12 @@ class Header extends React.Component{
                 height: 45
               },
               icon: {
-                float: 'left',
-                display: 'block',
-                marginRight: 15,
-                boxShadow: '0px 0px 0px 8px rgba(0,0,0,0.2)'
+                  paddingTop:8,
+                  float: 'left',
+                  display: 'block',
+                  marginRight: 15,
+                  textAlign: 'center',
+                  backgroundColor: blue600
               },
               span: {
                 paddingTop: 12,
@@ -79,7 +81,11 @@ class Header extends React.Component{
                 color: 'white',
                 fontWeight: 300,
                 textShadow: '1px 1px #444'
-              }
+
+              },
+                letter: {
+                  textAlign: 'center'
+                }
             }
           };
 
@@ -126,10 +132,7 @@ class Header extends React.Component{
                                   FindUs
                                 </div>
                                 <div style={drawerstyles.avatar.div}>
-                                  <Avatar src={avatar}
-                                          size={50}
-                                          style={drawerstyles.avatar.icon}/>
-                                  <span style={drawerstyles.avatar.span}>Username</span>
+                                    <Avatar><span style={drawerstyles.avatar.letter}>{this.props.username.charAt(0)}</span></Avatar>
                                 </div>
                                 <div>
                                     <MenuItem style={drawerstyles.logoutItem} onClick={this.goToLogin}>Log in/Sign Up</MenuItem>
@@ -163,10 +166,9 @@ class Header extends React.Component{
                                 FindUs
                             </div>
                             <div style={drawerstyles.avatar.div}>
-                                <Avatar src={avatar}
-                                        size={50}
-                                        style={drawerstyles.avatar.icon}/>
-                                <span style={drawerstyles.avatar.span}>Username</span>
+                                <Avatar size={50}
+                                        style={drawerstyles.avatar.icon}><span style={drawerstyles.avatar.letter}>{this.props.username.charAt(0)}</span></Avatar>
+                                <span style={drawerstyles.avatar.span}>{this.props.username}</span>
                             </div>
                             <div>
                                 <MenuItem style={drawerstyles.logoutItem} onClick={this.goToLogout}>Log Out</MenuItem>

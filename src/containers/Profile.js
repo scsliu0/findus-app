@@ -1,11 +1,15 @@
 import React from 'react';
-import {grey400} from 'material-ui/styles/colors';
+import {grey400, blue600} from 'material-ui/styles/colors';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Subheader from 'material-ui/Subheader';
+import Interest from '../components/Interest';
 
 import {base} from '../base'
-import {CircularProgress, List, ListItem, Paper} from "material-ui";
+import {
+    Avatar, Card, CardHeader, CardText, CardTitle, CircularProgress, Divider, List,
+    ListItem, Tab, Tabs
+} from "material-ui";
 
 const styles = {
     toggleDiv: {
@@ -17,18 +21,24 @@ const styles = {
         margin: '80px 20px 20px 15px'
     },
     form:{
-        margin: '0px 40px 40px 40px'
+        margin: '0px 40px 40px 15px'
     },
     toggleLabel: {
         color: grey400,
         fontWeight: 100
     },
-    buttons: {
-        marginTop: 30,
+    saveBtn: {
+        marginTop: 10,
         float: 'right'
     },
-    saveButton: {
-        marginLeft: 5
+    saveInterestsBtn:{
+       float: 'right',
+       marginBottom:20,
+       marginRight: 20
+    },
+    interestsBtn: {
+        marginTop: 10,
+        float: 'left'
     },
     title: {
         fontWeight: 'bold',
@@ -39,7 +49,10 @@ const styles = {
         width: '50%',
         marginLeft: 25
 
-    }
+    },
+    tabs:{
+        background: blue600,
+    },
 };
 
 class Profile extends React.Component {
@@ -52,34 +65,57 @@ class Profile extends React.Component {
             contactNum: null,
             location: null,
             loading: true,
-            uid: null,
+            userInterests: {},
+            interests: {}
+
         }
     }
 
+    componentDidUpdate(prevProps, prevState){
 
-    componentDidMount(){
-        this.fetchUserInfo();
+        if(prevProps.profileId===this.props.uid){
+
+        } else {
+            this.fetchUserInfo(this.props.profileId);
+        }
     }
 
-    fetchUserInfo = () => {
-        base.fetch('users/'+ this.props.profileId, {
+    componentDidMount(){
+        this.fetchUserInfo(this.props.profileId);
+        this.fetchMasterInterests();
+    }
+
+    fetchMasterInterests =  () => {
+        base.fetch('interests/', {
             context: this,
             then(data) {
                 if (data === null) {
-                    console.log("null data")
+                } else {
+                    this.setState({
+                        interests: data
+                    });
+                }
+            },
+        })
+    };
+    fetchUserInfo = (id) => {
+        base.fetch('users/'+ id, {
+            context: this,
+            then(data) {
+                if (data === null) {
                 } else {
                     this.setState({
                         name: data.name,
                         contactNum: data.contactNum,
-                        uid: this.props.uid,
                         location: data.location,
-                        loading: false
+                        loading: false,
+                        userInterests: data.interests
                     });
                 }
             },
-
         })
     };
+
     handleSave = (event) => {
         event.preventDefault();
         base.update('users/'+this.props.uid, {
@@ -87,7 +123,7 @@ class Profile extends React.Component {
                 name: this.state.name,
                 contactNum: this.state.contactNum,
                 location: this.state.location,
-                uid: this.state.uid
+                interests: this.state.userInterests
             },
             then(err){
                 if(!err){
@@ -104,6 +140,21 @@ class Profile extends React.Component {
         })
     };
 
+    handleExpandChange = (expanded) => {
+      this.setState({expanded});
+    };
+
+    addToInterests = (key, interest) => {
+       const userInterests = {...this.state.userInterests};
+       userInterests[key] = interest;
+       this.setState({userInterests});
+    };
+
+    removeFromInterests = (key) => {
+        const userInterests = {...this.state.userInterests};
+        delete userInterests[key];
+        this.setState({userInterests});
+    };
 
 
     render(){
@@ -120,57 +171,79 @@ class Profile extends React.Component {
             return (
             <div>
 
-                <div style={styles.container}>
-                    <Subheader style={styles.title}>Your Profile</Subheader>
+                <Card style={styles.container}>
+                    <CardHeader
+                        title={"Your Profile"}
+                        subtitle={"Yes, yours."}
+                        avatar={<Avatar>{this.state.name.charAt(0)}</Avatar>}/>
+                    <Tabs>
+                        <Tab label={"Info"} style={styles.tabs}>
+                            <CardText>
+                                <form style={styles.form}>
+                                    <TextField
+                                        hintText="Name"
+                                        floatingLabelText="Name"
+                                        fullWidth={true}
+                                        onChange={this.handleChange}
+                                        value={this.state.name}
+                                        name={"name"}
+                                        underlineShow={false}
+                                    />
+                                    <Divider/>
+                                    <TextField
+                                        hintText="Contact Number"
+                                        floatingLabelText="Contact Number"
+                                        fullWidth={true}
+                                        onChange={this.handleChange}
+                                        value={this.state.contactNum}
+                                        name={"contactNum"}
+                                        underlineShow={false}
+                                    />
+                                    <Divider/>
+                                    <TextField
+                                        hintText="Location"
+                                        floatingLabelText="Location"
+                                        fullWidth={true}
+                                        onChange={this.handleChange}
+                                        value={this.state.location}
+                                        name={"location"}
+                                        underlineShow={false}
+                                    />
+                                    <Divider/>
+                                    <div style={styles.saveBtn}>
+                                        <RaisedButton label="Save"
+                                                      type="submit"
+                                                      primary={true}
+                                                      onClick={this.handleSave}
 
-                </div>
+                                        />
+                                    </div>
+                                </form>
+                            </CardText>
+                        </Tab>
+                        <Tab label={"Interests"} style={styles.tabs}>
+                            <CardTitle title={"Interests"} subtitle={"Select your interests"}/>
+                                <List>
+                                    {
+                                        Object
+                                            .keys(this.state.interests)
+                                            .map(key => <Interest key={key} details={this.state.interests[key]} index={key} userInterests={this.state.userInterests} addToInterests={this.addToInterests} removeFromInterests={this.removeFromInterests} editable={true}/>)
+                                    }
+                                </List>
+                                <div style={styles.saveInterestsBtn}>
+                                    <RaisedButton label="Save"
+                                                  type="submit"
+                                                  primary={true}
+                                                  onClick={this.handleSave}
 
-                <form style={styles.form}>
-                    <TextField
-                        hintText="Name"
-                        floatingLabelText="Name"
-                        fullWidth={true}
-                        onChange={this.handleChange}
-                        value={this.state.name}
-                        name={"name"}
-                    />
-
-                    <TextField
-                        hintText="Interests"
-                        floatingLabelText="Interests(seperated by a comma)"
-                        fullWidth={true}
-                        onChange={this.handleChange}
-                        name={"interests"}
-                    />
-
-                    <TextField
-                        hintText="Contact Number"
-                        floatingLabelText="Contact Number"
-                        fullWidth={true}
-                        onChange={this.handleChange}
-                        value={this.state.contactNum}
-                        name={"contactNum"}
-                    />
-
-                    <TextField
-                        hintText="Location"
-                        floatingLabelText="Location"
-                        fullWidth={true}
-                        onChange={this.handleChange}
-                        value={this.state.location}
-                        name={"location"}
-                    />
-
-
-                    <div style={styles.buttons}>
-                        <RaisedButton label="Save"
-                                      style={styles.saveButton}
-                                      type="submit"
-                                      primary={true}
-                                      onClick={this.handleSave}
-                        />
-                    </div>
-                </form>
+                                    />
+                                </div>
+                        </Tab>
+                        <Tab label={"Contact"} style={styles.tabs}>
+                            <h1>Contact Info</h1>
+                        </Tab>
+                    </Tabs>
+                </Card>
             </div>
             )
         }
@@ -178,39 +251,41 @@ class Profile extends React.Component {
         return(
             <div className="Profile">
 
-                        <div style={styles.container}>
-                            <Subheader style={styles.title}>{this.state.name}'s Profile</Subheader>
-                        </div>
-                        <Paper style={styles.paper}>
+                <Card style={styles.container}>
+                    <CardHeader
+                        title={this.state.name + "'s Profile"}
+                        subtitle={this.state.name + " is a great person!"}
+                        avatar={<Avatar>{this.state.name.charAt(0)}</Avatar>}/>
+                    <Tabs>
+                        <Tab label={"Info"} style={styles.tabs}>
                             <List>
                                 <Subheader>Name</Subheader>
                                 <ListItem
+                                    key={1}
                                     primaryText={this.state.name}
                                 />
                                 <Subheader>Contact #</Subheader>
                                 <ListItem
+                                    key={2}
                                     primaryText={this.state.contactNum}
                                 />
                                 <Subheader>Location</Subheader>
                                 <ListItem
+                                    key={3}
                                     primaryText={this.state.location}
                                 />
                                 <hr/>
-                                <ListItem
-                                    primaryText={'Interests'}
-                                    initiallyOpen={true}
-                                    nestedItems={[
-                                        <ListItem
-                                        primaryText={'Hockey'}
-                                        />
-                                    ]}
-                                />
                             </List>
-                        </Paper>
-                    </div>
+                        </Tab>
+                        <Tab label={"Interests"} style={styles.tabs}>
 
+                        </Tab>
+                        <Tab label={"Contact"} style={styles.tabs}>
 
-
+                        </Tab>
+                    </Tabs>
+                </Card>
+            </div>
             )
     }
 }

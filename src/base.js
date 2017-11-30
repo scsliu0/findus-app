@@ -7,6 +7,9 @@ const base = Rebase.createClass({
 });
 
 const facebookProvider = new base.auth.FacebookAuthProvider();
+//facebookProvider.addScope('user_website');
+//facebookProvider.addScope('user_location');
+
 const googleProvider = new base.auth.GoogleAuthProvider();
 
 export {base, facebookProvider, googleProvider}

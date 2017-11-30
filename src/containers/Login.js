@@ -77,7 +77,6 @@ class Login extends React.Component{
             password: null,
             loginFail: false,
             loginFailText: ""
-            //redirect: false
         }
     }
 
@@ -85,7 +84,7 @@ class Login extends React.Component{
         base.auth().signInWithPopup(facebookProvider)
             .then((result, error) => {
                 if(error){
-                    console.log(error)
+
                 } else {
 
                     base.fetch('users/'+ result.user.uid, {
@@ -99,7 +98,8 @@ class Login extends React.Component{
                                         location: "",
                                         email: result.user.email,
                                         provider: "facebook.com",
-                                        interests: {}
+                                        interests: {},
+                                        uid: result.user.uid
                                     },
                                     then(err){
                                         if(!err){
@@ -108,12 +108,19 @@ class Login extends React.Component{
                                     }
                                 });
                             }
-
                             console.log(result.user.uid + " signed in with Facebook");
-
 
                             this.context.router.transitionTo('/user/' + result.user.uid + '/profile');
                         }
+                    });
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                if(error.code==="auth/account-exists-with-different-credential"){
+                    this.setState({
+                        loginFail: true,
+                        loginFailText:"E-mail already exists for a FindUs account"
                     });
                 }
             })
@@ -123,7 +130,7 @@ class Login extends React.Component{
         base.auth().signInWithPopup(googleProvider)
             .then((result, error) => {
                 if (error) {
-                    console.log(error)
+                    console.log("hello?")
                 } else {
 
                     base.fetch('users/' + result.user.uid, {
@@ -137,7 +144,8 @@ class Login extends React.Component{
                                         location: "",
                                         email: result.user.email,
                                         provider: "google.com",
-                                        interests: {}
+                                        interests: {},
+                                        uid: result.user.uid
                                     },
                                     then(err) {
                                         if (!err) {
@@ -153,6 +161,9 @@ class Login extends React.Component{
 
                 }
             })
+            .catch((error) => {
+                console.log(error);
+            })
     };
 
     authWithEmailPassword = (event) => {
@@ -167,7 +178,7 @@ class Login extends React.Component{
                 if(providers.length===0) {
                     //create user
                     return base.auth().createUserWithEmailAndPassword(data.email,data.password)
-                        .then((result,error) =>{
+                        .then((result) =>{
                         console.log(result);
                                         base.fetch('users/' + result.uid, {
                                             context: this,
@@ -180,7 +191,8 @@ class Login extends React.Component{
                                                             location: "",
                                                             email: result.email,
                                                             provider: "findus.com",
-                                                            interests: {}
+                                                            interests: {},
+                                                            uid: result.uid
                                                         },
                                                         then(err) {
                                                             if (!err) {
@@ -196,8 +208,7 @@ class Login extends React.Component{
                         })
 
                 } else if (providers.indexOf("password") === -1) {
-                    //they used google or facebook
-                    this.loginForm.reset();
+
                     this.setState({
                         loginFail: true,
                         loginFailText: "Account already created with that email using Facebook or Google"
@@ -206,20 +217,25 @@ class Login extends React.Component{
                 } else {
                     //they have created an account with email/password. Log them in here
                     return base.auth().signInWithEmailAndPassword(data.email, data.password)
-                        .then((result,error) => {
-                        console.log("here?");
+                        .then((result) => {
                             this.context.router.transitionTo('/user/'+result.uid+'/profile');
                         })
                 }
             })
             .catch((error)=>{
-                console.log(error);
+
                 if(error.code === "auth/wrong-password"){
                     this.setState({
                         loginFail: true,
-                        loginFailText: "Invalid email or password"
+                        loginFailText: "Invalid username or password"
+                    });
+                } else if(error.code==="auth/weak-password"){
+                    this.setState({
+                        loginFail: true,
+                        loginFailText: error.message
                     });
                 }
+
             })
     };
 
@@ -227,6 +243,13 @@ class Login extends React.Component{
         event.preventDefault();
         this.setState({
             [event.target.name]: value
+        })
+    };
+
+    handleSnackbarClose = () =>{
+        this.setState({
+            loginFail: false,
+            loginFailText:" "
         })
     };
 
@@ -304,7 +327,7 @@ class Login extends React.Component{
                     open={this.state.loginFail}
                     message={this.state.loginFailText}
                     autoHideDuration={5000}
-                    onRequestClose={this.handleRequestClose}
+                    onRequestClose={this.handleSnackbarClose}
                 />
             </div>
         )
@@ -315,25 +338,3 @@ export default Login
 Login.contextTypes = {
     router: React.PropTypes.object
 };
-
-/*
-<Paper style={styles.paperStyle} zDepth={3} className="login-page">
-                    <h3>Log In/Sign Up</h3>
-                    <hr/>
-                    <RaisedButton primary={true} onClick={()=>this.authWithFacebook()} label={"Log In With Facebook"}/>
-                    <hr/>
-                    <RaisedButton primary={true} onClick={()=>this.authWithGoogle()} label={"Log In With Google"}/>
-                    <hr/>
-                    <form ref={(form)=>{this.loginForm = form}}>
-                        <TextField hintText={"Email"} floatingLabelText={"Email"} floatingLabelFixed={true} onChange={this.handleChange} type="email" name={"email"} className="input"/>
-                        <TextField hintText={"Password"} floatingLabelText={"Password"} floatingLabelFixed={true} onChange={this.handleChange} type="password" name={"password"} className="input"/>
-                        <hr/>
-                        <RaisedButton style={{background:"#11C1F7"}} primary={true} onClick={this.authWithEmailPassword} label={"Log In"}/>
-                    </form>
-                    <hr/>
-                    <div>
-                        <h5>Note</h5>
-                        This form will create an account if you don't have one already, otherwise it will attempt to log you in.
-                    </div>
-                </Paper>
- */

@@ -1,8 +1,6 @@
 import React from 'react';
-import {grey400} from 'material-ui/styles/colors';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import Header from '../components/Header';
 import Subheader from 'material-ui/Subheader';
 
 class SignUp extends React.Component {
@@ -79,6 +77,6 @@ class SignUp extends React.Component {
 
 SignUp.contextTypes = {
     router: React.PropTypes.object
-}
+};
 
 export default SignUp;

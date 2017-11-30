@@ -15,7 +15,10 @@ const themeDefault = getMuiTheme({
   raisedButton: {
       primaryColor: blue600,
       secondaryColor: red600
-  }
+  },
+    checkbox: {
+      primaryColor: blue600
+    }
 });
 
 
