@@ -118,26 +118,42 @@ class Profile extends React.Component {
 
     handleSave = (event) => {
         event.preventDefault();
-        base.update('users/'+this.props.uid, {
-            data: {
-                name: this.state.name,
-                contactNum: this.state.contactNum,
-                location: this.state.location,
-                interests: this.state.userInterests
-            },
-            then(err){
-                if(!err){
-                    console.log("Info saved to database!");
+        if(this.state.userInterests) {
+            base.update('users/' + this.props.uid, {
+                data: {
+                    name: this.state.name,
+                    contactNum: this.state.contactNum,
+                    location: this.state.location,
+                    interests: this.state.userInterests
+                },
+                then(err) {
+                    if (!err) {
+                        console.log("Info saved to database!");
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            base.update('users/' + this.props.uid, {
+                data: {
+                    name: this.state.name,
+                    contactNum: this.state.contactNum,
+                    location: this.state.location
+                },
+                then(err) {
+                    if (!err) {
+                        console.log("Info saved to database!");
+                    }
+                }
+            });
+        }
     };
 
     handleChange = (event, value) => {
         event.preventDefault();
         this.setState({
             [event.target.name]: value
-        })
+        });
+        console.log(value);
     };
 
     handleExpandChange = (expanded) => {

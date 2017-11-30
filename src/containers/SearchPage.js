@@ -3,9 +3,10 @@ import Subheader from 'material-ui/Subheader';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import Snackbar from 'material-ui/Snackbar';
-import {blue500, white} from 'material-ui/styles/colors';
+import {blue900, white} from 'material-ui/styles/colors';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import {base} from '../base';
+import SearchResult from '../components/SearchResult'
 
 class SearchPage extends React.Component {
 
@@ -13,7 +14,29 @@ class SearchPage extends React.Component {
         super();
         this.state = {
             open: false,
+            snackText: "",
+            userList: {}
         };
+    }
+
+    componentWillMount(){
+        base.fetch('users/', {
+            context: this,
+            then(data) {
+
+                if (data === null) {
+                    //don't set userList or username yet, you're on the login page
+                } else {
+                    this.setState({
+                        userList: data
+                    })
+                }
+            },
+        });
+    }
+
+    componentDidUpdate(){
+
     }
 
     handleTouchTap = () => {
@@ -27,6 +50,42 @@ class SearchPage extends React.Component {
           open: false,
         });
       };
+
+      requestSent = () => {
+          this.setState({
+              open:true,
+              snackText: "Request Sent!"
+          });
+      };
+
+      handleSendRequest = (targetId) => {
+          if (this.state.userList[this.props.uid].name && this.state.userList[this.props.uid].interests) {
+              base.update('users/' + targetId + '/requestList/' + this.props.uid, {
+                  data: {
+                      name: this.state.userList[this.props.uid].name,
+                      interests: this.state.userList[this.props.uid].interests
+                  },
+                  then(err) {
+                      if (!err) {
+                          console.log("request sent");
+                      }
+                  }
+              });
+
+              this.setState({
+                  open:true,
+                  snackText: "Request Sent!"
+              });
+          } else {
+              this.setState({
+                  open:true,
+                  snackText: "Configure your account correctly first"
+              })
+          }
+
+      };
+
+
 
 
     render(){
@@ -71,54 +130,17 @@ class SearchPage extends React.Component {
                         </TableRow>
                       </TableHeader>
                       <TableBody displayRowCheckbox={false}>
-                        {Object.values(this.props.userlist).map((user) => {
-                            if(this.props.uid !== user.uid){
-                                return (
-                                    <TableRow>
-                                      <TableRowColumn  style={styles.columns.name}>{user.name}</TableRowColumn>
-                                      <TableRowColumn  style={styles.columns.interests}>
-                                        <ul>
-                                        {Object.values(user.interests).map((interests) =>{
-                                            return(
-                                                <li>{interests}</li>
-                                            )
-                                        })}
-                                        </ul>
-                                      </TableRowColumn>
-                                      <TableRowColumn  style={styles.columns.requests}>
-                                          <FloatingActionButton zDepth={0}
-                                                                mini={true}
-                                                                backgroundColor={blue500}
-                                                                iconStyle={styles.editButton}
-                                                                onClick={() => {
-                                                                    /*console.log("Person requested for "+user.uid);
-                                                                    console.log("Person sending "+this.props.uid);*/
-                                                                    this.handleTouchTap();
-                                                                    base.update('users/'+user.uid + '/requestList/'+this.props.uid, {
-                                                                       data:{
-                                                                           uid: this.props.uid,
-                                                                           name: this.props.userlist[this.props.uid].name,
-                                                                           interests: this.props.userlist[this.props.uid].interests
-                                                                           },
-                                                                           then(err){
-                                                                               if(!err){
-                                                                                   console.log("request sent")
-                                                                               }
-                                                                           }
-                                                                       });
-                                                                }}>
-                                              <ContentAdd  />
-                                          </FloatingActionButton>
-                                      </TableRowColumn>
-                                    </TableRow>
-                                )
-                            }
-                        })}
+                          {
+                              Object
+                                  .keys(this.state.userList)
+                                  .map(user => <SearchResult key={user} user={this.state.userList[user]} index={user} uid={this.props.uid} sendRequest={this.handleSendRequest}/>)
+                          }
                       </TableBody>
                     </Table>
                     <Snackbar
                               open={this.state.open}
-                              message="Request Sent"
+                              message={this.state.snackText}
+                              bodyStyle={{background: blue900}}
                               autoHideDuration={3000}
                               onRequestClose={this.handleRequestClose}
                     />

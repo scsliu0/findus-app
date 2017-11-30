@@ -97,12 +97,6 @@ class App extends React.Component {
     }
 
     componentWillMount() {
-        this.ref = base.syncState('/users/' + this.props.params.userId + '/interests',
-            {
-                context: this,
-                state: 'interests'
-            });
-
             base.fetch('users/', {
                 context: this,
                 then(data) {
@@ -134,7 +128,6 @@ class App extends React.Component {
                 })
             }
         });
-
     }
 
     componentWillUpdate(nextProps, nextState) {
@@ -144,7 +137,6 @@ class App extends React.Component {
     }
 
     componentWillUnmount() {
-        base.removeBinding(this.ref);
         this.removeAuthListener();
     }
 
@@ -178,7 +170,7 @@ class App extends React.Component {
             return(
                 <div>
                     <Header styles={styles.header} authenticated={this.state.authenticated} userId={this.state.uid} username={this.state.username}/>
-                    <Profile uid={this.state.uid} profileId={this.state.uid} interests={this.state.interests}/>
+                    <Profile uid={this.state.uid} profileId={this.state.uid}/>
                 </div>
             )
         }
@@ -187,7 +179,7 @@ class App extends React.Component {
             return(
                 <div>
                     <Header styles={styles.header} authenticated={this.state.authenticated} userId={this.state.uid} username={this.state.username}/>
-                    <Profile uid={this.state.uid} profileId={this.props.params.userId} interests={this.state.interests}/>
+                    <Profile uid={this.state.uid} profileId={this.props.params.userId}/>
                 </div>
             )
         }
@@ -196,7 +188,7 @@ class App extends React.Component {
             return(
                 <div>
                     <Header styles={styles.header} authenticated={this.state.authenticated} userId={this.state.uid} username={this.state.username}/>
-                    <Search uid={this.state.uid} userlist={this.state.userlist} interests={this.state.interests}/>
+                    <Search uid={this.state.uid}/>
                 </div>
             )
         }
@@ -205,7 +197,7 @@ class App extends React.Component {
             return(
                 <div>
                     <Header styles={styles.header} authenticated={this.state.authenticated} userId={this.state.uid} username={this.state.username}/>
-                    <Connections uid={this.state.uid} interests={this.state.interests}/>
+                    <Connections uid={this.state.uid}/>
                 </div>
             )
         }

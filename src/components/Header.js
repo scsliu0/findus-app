@@ -7,7 +7,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Drawer from 'material-ui/Drawer';
 import {spacing, typography} from 'material-ui/styles';
 import Avatar from 'material-ui/Avatar';
-import {RaisedButton} from "material-ui";
+import {Badge, RaisedButton} from "material-ui";
 
 class Header extends React.Component{
 
@@ -55,7 +55,7 @@ class Header extends React.Component{
             },
             menuItem: {
               color: white,
-              fontSize: 14
+              fontSize: 17,
             },
             logoutItem: {
               color: red800,
@@ -102,47 +102,16 @@ class Header extends React.Component{
           iconsRightContainer: {
             marginLeft: 20
           },
+            badge: {
+              
+            }
 
         };
 
         return(
             <div className="Header">
-                {!this.props.authenticated
+                {this.props.authenticated
                     ?
-                    <div>
-                        <AppBar
-                            style={style.appBar}
-                            title="FindUs"
-                            iconElementLeft={
-                                <IconButton style={style.menuButton} onClick={() => this.setState({open: !this.state.open})}>
-                                  <Menu color={white} />
-                                </IconButton>
-                            }
-                            iconElementRight={<RaisedButton onClick={this.goToLogin} label={"Login/Signup"}/>}
-                        />
-
-                        <Drawer
-                                docked={false}
-                                width={200}
-                                open={this.state.open}
-                                onRequestChange={(open) => this.setState({open})}
-                                >
-                                <div style={drawerstyles.logo}>
-                                  FindUs
-                                </div>
-                                <div style={drawerstyles.avatar.div}>
-                                    <Avatar><span style={drawerstyles.avatar.letter}>{this.props.username.charAt(0)}</span></Avatar>
-                                </div>
-                                <div>
-                                    <MenuItem style={drawerstyles.logoutItem} onClick={this.goToLogin}>Log in/Sign Up</MenuItem>
-                                    <MenuItem style={drawerstyles.menuItem} onClick={this.goToProfile}>Profile</MenuItem>
-                                    <MenuItem style={drawerstyles.menuItem} onClick={this.goToSearch}>Search</MenuItem>
-                                    <MenuItem style={drawerstyles.menuItem} onClick={this.goToRequests}>Requests</MenuItem>
-                                    <MenuItem style={drawerstyles.menuItem} onClick={this.goToConnections}>Connections</MenuItem>
-                                </div>
-                        </Drawer>
-                    </div>
-                :
                     <div>
                         <AppBar
                             style={style.appBar}
@@ -173,6 +142,40 @@ class Header extends React.Component{
                                 <MenuItem style={drawerstyles.logoutItem} onClick={this.goToLogout}>Log Out</MenuItem>
                                 <MenuItem style={drawerstyles.menuItem} onClick={this.goToProfile}>Profile</MenuItem>
                                 <MenuItem style={drawerstyles.menuItem} onClick={this.goToSearch}>Search</MenuItem>
+                                <MenuItem style={drawerstyles.menuItem} onClick={this.goToRequests}><Badge badgeContent={4} style={style.badge} children={'Requests'}/></MenuItem>
+                                <MenuItem style={drawerstyles.menuItem} onClick={this.goToConnections}>Connections</MenuItem>
+                            </div>
+                        </Drawer>
+                    </div>
+                :
+                    <div>
+                        <AppBar
+                            style={style.appBar}
+                            title="FindUs"
+                            iconElementLeft={
+                                <IconButton style={style.menuButton} onClick={() => this.setState({open: !this.state.open})}>
+                                    <Menu color={white} />
+                                </IconButton>
+                            }
+                            iconElementRight={<RaisedButton onClick={this.goToLogin} label={"Login/Signup"}/>}
+                        />
+
+                        <Drawer
+                            docked={false}
+                            width={200}
+                            open={this.state.open}
+                            onRequestChange={(open) => this.setState({open})}
+                        >
+                            <div style={drawerstyles.logo}>
+                                FindUs
+                            </div>
+                            <div style={drawerstyles.avatar.div}>
+                                <Avatar><span style={drawerstyles.avatar.letter}>{this.props.username.charAt(0)}</span></Avatar>
+                            </div>
+                            <div>
+                                <MenuItem style={drawerstyles.logoutItem} onClick={this.goToLogin}>Log in/Sign Up</MenuItem>
+                                <MenuItem style={drawerstyles.menuItem} onClick={this.goToProfile}>Profile</MenuItem>
+                                <MenuItem style={drawerstyles.menuItem} onClick={this.goToSearch}>Search</MenuItem>
                                 <MenuItem style={drawerstyles.menuItem} onClick={this.goToRequests}>Requests</MenuItem>
                                 <MenuItem style={drawerstyles.menuItem} onClick={this.goToConnections}>Connections</MenuItem>
                             </div>
@@ -190,3 +193,7 @@ export default Header;
 Header.contextTypes = {
     router: React.PropTypes.object
 };
+
+/*
+
+ */
