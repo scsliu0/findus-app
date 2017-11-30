@@ -71,7 +71,7 @@ class Requests extends React.Component {
                         </TableRow>
                       </TableHeader>
                       <TableBody displayRowCheckbox={false}>
-                          {Object.values(this.props.userlist[this.props.uid].requestList).map((user) => {
+                          {/*{Object.values(this.props.userlist[this.props.uid].requestList).map((user) => {
                               console.log(this.pr)
                               console.log(user);
                               if(this.props.uid !== user.uid){
@@ -111,12 +111,13 @@ class Requests extends React.Component {
                                                                                         console.log("request sent")
                                                                                     }
                                                                                 }
-                                                                            });*/
+                                                                            });
                                                                   }}>
                                                 <ActionDone  />
                                             </FloatingActionButton>
                                         </TableRowColumn>
                                       </TableRow>
+                                      */}
                                   )
                               }
                           })}
