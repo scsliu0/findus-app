@@ -6,9 +6,8 @@ import Paper from 'material-ui/Paper';
 import {CircularProgress} from "material-ui";
 import {grey500, white} from 'material-ui/styles/colors';
 
-
 import SearchPage from './SearchPage';
-import RequestsPage from './RequestsPage';
+import Requests from './Requests';
 
 import Profile from "./Profile";
 import sampleInterests from '../sample-interests';
@@ -16,7 +15,6 @@ import {base} from '../base'
 import Header from "../components/Header";
 import Connections from "../containers/ConnectionsPage"
 import Search from "../containers/SearchPage"
-import Requests from "../containers/RequestsPage"
 import Login from "./Login";
 
 const styles = {

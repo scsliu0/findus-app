@@ -10,7 +10,7 @@ import SignUp from './containers/SignUp';
 import App from './containers/App';
 import ConnectionsPage from './containers/ConnectionsPage';
 import Profile from './containers/Profile';
-import RequestsPage from './containers/RequestsPage';
+import Requests from './containers/Requests';
 import SearchPage from './containers/SearchPage';
 import Login from './containers/Login';
 import Logout from './containers/Logout'

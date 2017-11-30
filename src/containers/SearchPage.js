@@ -3,7 +3,7 @@ import Subheader from 'material-ui/Subheader';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import Snackbar from 'material-ui/Snackbar';
-import {grey200, grey500} from 'material-ui/styles/colors';
+import {blue500, white} from 'material-ui/styles/colors';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import {base} from '../base';
 
@@ -43,7 +43,7 @@ class SearchPage extends React.Component {
                 fontSize: '30px'
             },
             editButton: {
-              fill: grey500
+              fill: white
             },
             columns: {
               name: {
@@ -80,15 +80,17 @@ class SearchPage extends React.Component {
                                       <TableRowColumn  style={styles.columns.requests}>
                                           <FloatingActionButton zDepth={0}
                                                                 mini={true}
-                                                                backgroundColor={grey200}
+                                                                backgroundColor={blue500}
                                                                 iconStyle={styles.editButton}
                                                                 onClick={() => {
-                                                                    console.log(user.uid);
-                                                                    console.log(this.props.uid);
+                                                                    /*console.log("Person requested for "+user.uid);
+                                                                    console.log("Person sending "+this.props.uid);*/
                                                                     this.handleTouchTap();
-                                                                    base.push('users/'+user.uid + '/requestList', {
+                                                                    base.update('users/'+user.uid + '/requestList/'+this.props.uid, {
                                                                        data:{
-                                                                           uid: this.props.uid
+                                                                           uid: this.props.uid,
+                                                                           name: this.props.userlist[this.props.uid].name,
+                                                                           interests: this.props.userlist[this.props.uid].interests
                                                                            },
                                                                            then(err){
                                                                                if(!err){
