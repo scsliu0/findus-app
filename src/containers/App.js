@@ -106,13 +106,13 @@ class App extends React.Component {
             base.fetch('users/', {
                 context: this,
                 then(data) {
-                    if (data === null) {
-                        console.log("null data")
+
+                    if (data === null || this.state.uid === null) {
+                        //don't set userlist or username yet, you're on the login page
                     } else {
                         this.setState({
-
-                            username: data[this.state.uid].name,
-                            userlist: data
+                            userlist: data,
+                            username: data[this.state.uid].name
                         })
                     }
                 },

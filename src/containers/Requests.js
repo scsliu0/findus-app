@@ -114,12 +114,13 @@ class Requests extends React.Component {
                                                                                         console.log("request sent")
                                                                                     }
                                                                                 }
-                                                                            });*/
+                                                                            });
                                                                   }}>
                                                 <ActionDone  />
                                             </FloatingActionButton>
                                         </TableRowColumn>
                                       </TableRow>
+                                      */}
                                   )
                               }
                           })}
