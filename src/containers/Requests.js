@@ -72,7 +72,6 @@ class Requests extends React.Component {
                       </TableHeader>
                       <TableBody displayRowCheckbox={false}>
                           {Object.values(this.props.userlist[this.props.uid].requestList).map((user) => {
-                              console.log(this.props.userlist[this.props.uid].requestList);
                               if(this.props.uid !== user.uid){
                                   return (
                                       <TableRow>
@@ -92,9 +91,19 @@ class Requests extends React.Component {
                                                                   backgroundColor={white}
                                                                   iconStyle={styles.editButton}
                                                                   onClick={() => {
-                                                                      console.log("Person requested for "+user.name);
-                                                                      console.log("Person sending "+this.props.uid);
                                                                       this.handleTouchTap();
+                                                                      base.update('users/'+this.props.uid+'/acceptedList'+user.uid, {
+                                                                          data:{
+                                                                              uid: user.uid,
+                                                                              name: user.name,
+                                                                              interests: user.interests
+                                                                              },
+                                                                          then(err){
+                                                                              if(!err){
+                                                                                  console.log("added to own acceptedList");
+                                                                              }
+                                                                          }
+                                                                      })
                                                                       base.update('users/'+user.uid + '/acceptedList/'+this.props.uid, {
                                                                          data:{
                                                                              uid: this.props.uid,
@@ -105,13 +114,15 @@ class Requests extends React.Component {
                                                                                  if(!err){
                                                                                      console.log("Request Accepted");
                                                                                  }
+                                                                                 console.log(this.props.uid);
+                                                                                 base.remove('users/'+this.props.uid+'/requestedList/'+user.uid, function(err){
+                                                                                   if(!err){
+                                                                                     console.log('Request Removed from List');
+                                                                                   }
+                                                                                 });
                                                                              }
                                                                          });
-                                                                         base.remove('users/'+this.props.uid+'/requestedList/'+user.uid, function(err){
-                                                                           if(!err){
-                                                                             console.log('Request Removed from List');
-                                                                           }
-                                                                         });                                                                         /*base.update('users/'+this.props.uid + '/acceptedList/'+user.uid, {
+                                                                    /*base.update('users/'+this.props.uid + '/acceptedList/'+user.uid, {
                                                                             data:{
                                                                                 uid: user.uid,
                                                                                 name: user.userlist[this.props.uid].name,
@@ -122,13 +133,12 @@ class Requests extends React.Component {
                                                                                         console.log("request sent")
                                                                                     }
                                                                                 }
-                                                                            });
+                                                                            });*/
                                                                   }}>
                                                 <ActionDone  />
                                             </FloatingActionButton>
                                         </TableRowColumn>
                                       </TableRow>
-                                      */}
                                   )
                               }
                           })}
